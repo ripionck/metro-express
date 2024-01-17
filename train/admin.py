@@ -10,4 +10,3 @@ class StationAdmin(admin.ModelAdmin):
                  
 admin.site.register(models.Train, TrainAdmin)
 admin.site.register(models.Station, StationAdmin)
-admin.site.register(models.Review)
