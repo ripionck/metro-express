@@ -1,0 +1,36 @@
+<nav class="bg-gray-800 p-4">
+    <div class="container mx-auto">
+        <div class="flex items-center justify-around">
+            <a class="text-white text-lg font-semibold" href="#">Train Ticket Booking</a>
+            <div class="hidden sm:block">
+                <ul class="flex items-center space-x-4">
+                    <li class="nav-item">
+                        <a class="text-white hover:underline" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="text-white hover:underline" href="#">Search Trains</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="text-white hover:underline" href="#">Train Information</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="text-white hover:underline" href="#">Contact Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="text-white hover:underline"
+                           href="{% url 'passenger_register' %}">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="text-white hover:underline" href="#">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="text-white hover:underline" href="#">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="text-white hover:underline" href="#">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
