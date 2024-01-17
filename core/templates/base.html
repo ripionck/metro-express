@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport"
+              content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="Library Management System" />
+        <title>
+            {% block head_title %}
+               Metro Express
+            {% endblock head_title %}
+        </title>
+        <!-- Tailwind CSS Link -->
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body>
+        {% include "navbar.html" %}
+        {% block body %}
+            <div class="bg-sky-100" id="main">
+                {% include "messages.html" %}
+                {% block content %}
+                {% endblock content %}
+            </div>
+            {% include "footer.html" %}
+        {% endblock body %}
+    </body>
+</html>
