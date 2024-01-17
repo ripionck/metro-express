@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.auth.models import User
 from .constants import  DAYS_OF_WEEK
 
 
@@ -26,11 +25,3 @@ class Train(models.Model):
     def __str__(self):
         return self.name
 
-class Review(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    train = models.ForeignKey(Train, on_delete=models.CASCADE)
-    comment = models.TextField()
-    timestamp = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f'{self.user.first_name} - {self.comment}'
