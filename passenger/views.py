@@ -3,8 +3,8 @@ from django.views.generic import FormView
 from django.views import View
 from django.urls import reverse_lazy
 from django.contrib.auth import login, logout
-from django.contrib.auth.views import LoginView, LogoutView
-from .forms import PassengerRegistrationForm, ProfileUpdateForm
+from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
+from .forms import PassengerRegistrationForm, ProfileUpdateForm, PasswordChangeForm
 
 # Create your views here.
 
@@ -51,3 +51,11 @@ class ProfileUpdateView(View):
             return redirect('passenger_profile')
         
         return render(request, self.template_name, {'form': form})
+    
+class PasswordChangeView(PasswordChangeView):
+    form_class = PasswordChangeForm
+    template_name = 'passengers/password_change.html'
+    success_url = reverse_lazy('password_change_done')
+
+class PasswordChangeDoneView(PasswordChangeView):
+    template_name = 'passengers/password_change_done.html'

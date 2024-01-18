@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.contrib.auth.models import User
 from .models import Passenger
 from .constants import GENDER_TYPE
@@ -104,3 +104,18 @@ class ProfileUpdateForm(forms.ModelForm):
             passenger.save()
 
         return passenger
+
+
+class PasswordChangeForm(PasswordChangeForm):
+    new_password1 = forms.CharField(
+        label='New password',
+        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+    )
+    new_password2 = forms.CharField(
+        label='Confirm new password',
+        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+    )
+
+    class Meta:
+        model = User 
+        fields = ('old_password', 'new_password1', 'new_password2')

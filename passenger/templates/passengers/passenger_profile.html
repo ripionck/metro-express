@@ -8,4 +8,7 @@
         {{ form.as_p }}
         <button type="submit">Submit</button>
     </form>
+    <p>
+        <a href="{% url 'password_change' %}">Want to change your password?</a>
+    </p>
 {% endblock content %}
