@@ -22,3 +22,19 @@ class TrainReviewView(LoginRequiredMixin, View):
         user_review = Review(train=train, user=request.user, comment=comment)
         user_review.save()
         return HttpResponseRedirect(reverse('train_review', args=[train_id]))
+
+class ContactUsView(View):
+    template_name = 'contact_us.html'
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
+
+    def post(self, request, *args, **kwargs):
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+
+        # Here, you can add your logic to handle the form data
+        # For example, you can send an email, save to the database, etc.
+
+        return HttpResponseRedirect(reverse('contact_us'))

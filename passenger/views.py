@@ -101,5 +101,3 @@ class PasswordChangeView(PasswordChangeView):
         messages.success(self.request, 'Your password was successfully changed.')
         return response
 
-class PasswordChangeDoneView(PasswordChangeView):
-    template_name = 'passengers/password_change_done.html'
