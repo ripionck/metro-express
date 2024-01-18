@@ -5,6 +5,11 @@
 {% block content %}
     <h1>Booking List</h1>
     <ul>
-        {% for booking in user_bookings %}<li>{{ booking }}</li>{% endfor %}
+        {% for booking in user_bookings %}
+            <li>{{ booking }}</li>
+            {% if booking.train %}
+                <a href="{% url 'train_review' booking.train.id %}">Write a review for {{ booking.train.name }}</a>
+            {% endif %}
+        {% endfor %}
     </ul>
 {% endblock content %}

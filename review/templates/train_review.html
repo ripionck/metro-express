@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}
+    Reviews for {{ train.name }}
+{% endblock title %}
+{% block content %}
+    <h1>Reviews for {{ train.name }}</h1>
+    <form method="post" action="{% url 'train_review' train.id %}">
+        {% csrf_token %}
+        <label for="comment">Comment:</label>
+        <textarea name="comment"></textarea>
+        <br>
+        <button type="submit">Submit Review</button>
+    </form>
+    <h2>Existing Reviews</h2>
+    <ul>
+        {% for review in reviews %}
+            <li>
+                <strong>{{ review.user.username }}</strong>
+                <br>
+                {{ review.comment }}
+                <br>
+                {{ review.timestamp }}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock content %}

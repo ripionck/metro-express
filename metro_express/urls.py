@@ -25,5 +25,6 @@ urlpatterns = [
     path('train/', include('train.urls')),
     path('transaction/', include('transaction.urls')),
     path('booking/', include('booking.urls')),
+    path('review/', include('review.urls')),
 
 ]

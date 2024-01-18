@@ -11,4 +11,5 @@ class BookingListView(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         user_bookings = Booking.objects.filter(user=request.user)
+        print(user_bookings)
         return render(request, self.template_name, {'user_bookings': user_bookings})
