@@ -1,14 +1,90 @@
 {% extends "base.html" %}
 {% block title %}
-    Profile
+    Metro Express | User Information
 {% endblock title %}
 {% block content %}
-    <form method="post" action="">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Submit</button>
-    </form>
-    <p>
-        <a href="{% url 'password_change' %}">Want to change your password?</a>
-    </p>
+    <div class="container w-1/2 mx-auto pt-8">
+        <h1 class="text-2xl font-bold mb-4">User Information</h1>
+        <form method="post" action="">
+            {% csrf_token %}
+            <div class="flex mb-4">
+                <div class="w-1/2 pr-2">
+                    <label for="{{ form.username.id_for_label }}"
+                           class="block text-gray-700 font-bold mb-2">Username:</label>
+                    {{ form.username }}
+                </div>
+                <div class="w-1/2 pl-2">
+                    <label for="{{ form.first_name.id_for_label }}"
+                           class="block text-gray-700 font-bold mb-2">First Name:</label>
+                    {{ form.first_name }}
+                </div>
+            </div>
+            <div class="flex mb-4">
+                <div class="w-1/2 pr-2">
+                    <label for="{{ form.last_name.id_for_label }}"
+                           class="block text-gray-700 font-bold mb-2">Last Name:</label>
+                    {{ form.last_name }}
+                </div>
+                <div class="w-1/2 pl-2">
+                    <label for="{{ form.email.id_for_label }}"
+                           class="block text-gray-700 font-bold mb-2">Email Address:</label>
+                    {{ form.email }}
+                </div>
+            </div>
+            <div class="flex mb-4">
+                <div class="w-1/2 pr-2">
+                    <label for="{{ form.nid_no.id_for_label }}"
+                           class="block text-gray-700 font-bold mb-2">NID Number:</label>
+                    {{ form.nid_no }}
+                </div>
+                <div class="w-1/2 pl-2">
+                    <label for="{{ form.mobile_no.id_for_label }}"
+                           class="block text-gray-700 font-bold mb-2">Mobile Number:</label>
+                    {{ form.mobile_no }}
+                </div>
+            </div>
+            <div class="flex mb-4">
+                <div class="w-1/2 pr-2">
+                    <label for="{{ form.date_of_birth.id_for_label }}"
+                           class="block text-gray-700 font-bold mb-2">Date of Birth:</label>
+                    {{ form.date_of_birth }}
+                </div>
+                <div class="w-1/2 pl-2">
+                    <label class="block text-gray-700 font-bold mb-2">Gender:</label>
+                    {{ form.gender }}
+                </div>
+            </div>
+            <div class="flex mb-4">
+                <div class="w-1/2 pr-2">
+                    <label for="{{ form.road_no.id_for_label }}"
+                           class="block text-gray-700 font-bold mb-2">Road No:</label>
+                    {{ form.road_no }}
+                </div>
+                <div class="w-1/2 pl-2">
+                    <label for="{{ form.house_no.id_for_label }}"
+                           class="block text-gray-700 font-bold mb-2">House No:</label>
+                    {{ form.house_no }}
+                </div>
+            </div>
+            <div class="flex mb-4">
+                <div class="w-1/2 pr-2">
+                    <label for="{{ form.zip_code.id_for_label }}"
+                           class="block text-gray-700 font-bold mb-2">Zip Code:</label>
+                    {{ form.zip_code }}
+                </div>
+                <div class="w-1/2 pl-2">
+                    <label for="{{ form.city.id_for_label }}"
+                           class="block text-gray-700 font-bold mb-2">City:</label>
+                    {{ form.city }}
+                </div>
+            </div>
+            <button type="submit"
+                    class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">
+                Submit
+            </button>
+        </form>
+        <p class="my-4">
+            <a href="{% url 'password_change' %}">Want to change your password?</a>
+        </p>
+    </div>
 {% endblock content %}
