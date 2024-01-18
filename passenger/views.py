@@ -1,4 +1,10 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.auth.models import User
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.views.generic import FormView
 from django.views import View
 from django.urls import reverse_lazy
@@ -11,15 +17,54 @@ from .forms import PassengerRegistrationForm, ProfileUpdateForm, PasswordChangeF
 class PassengerRegistrationView(FormView):
     template_name = 'passengers/passenger_register.html'
     form_class = PassengerRegistrationForm
-    success_url = reverse_lazy('passenger_register')
+    success_url = reverse_lazy('confirm_register')
 
+    # def form_valid(self, form):
+    #     print(form.cleaned_data)
+    #     # Save the user instance and log in the user
+    #     user = form.save()
+    #     login(self.request, user)
+    #     # Redirect to the success URL (user's profile page)
+    #     return super().form_valid(form)
     def form_valid(self, form):
-        print(form.cleaned_data)
-        # Save the user instance and log in the user
         user = form.save()
-        login(self.request, user)
-        # Redirect to the success URL (user's profile page)
-        return super().form_valid(form)
+
+        # Generate token and confirmation link
+        token = default_token_generator.make_token(user)
+        uid = urlsafe_base64_encode(force_bytes(user.pk))
+        confirm_link = f'http://127.0.0.1:8000/passenger/activate/{uid}/{token}'
+
+        # Send confirmation email
+        email_subject = 'Confirm Your Email'
+        email_body = render_to_string('passengers/confirm_email.html', {'confirm_link': confirm_link})
+        email = EmailMultiAlternatives(email_subject, '', to=[user.email])
+        email.attach_alternative(email_body, 'text/html')
+        email.send()
+
+        return redirect(self.success_url)
+
+class RegistrationConfirmationView(View):
+    template_name = 'passengers/confirm_message.html'
+
+    def get_success_url(self):
+        return reverse_lazy('confirm_register')
+
+
+class ActivateAccountView(View):
+    def get(self, request, uid64, token):
+        try:
+            uid = urlsafe_base64_decode(uid64).decode()
+            user = User._default_manager.get(pk=uid)
+        except User.DoesNotExist:
+            user = None
+
+        if user is not None and default_token_generator.check_token(user, token):
+            user.is_active = True
+            user.save()
+            return redirect('passenger_login')
+        else:
+            return redirect('passenger_register')
+
     
 class PassengerloginView(LoginView):
     template_name = 'passengers/passenger_login.html'
@@ -28,12 +73,11 @@ class PassengerloginView(LoginView):
         return reverse_lazy('home')
     
 class PassengerLogoutView(LogoutView):
-    def get_success_url(self):
+     def get_success_url(self):
         # Logout the user and redirect to the home page
         if self.request.user.is_authenticated:
             logout(self.request)
         return reverse_lazy('home')
-
     
 class ProfileUpdateView(View):
     template_name = 'passengers/passenger_profile.html'

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}
+    Trains Information
+{% endblock title %}
+{% block content %}
+    <div class="container mx-auto pt-8">
+        <h1 class="text-2xl font-bold mb-4">Train Information</h1>
+        <table class="min-w-full bg-white border border-gray-300">
+            <thead>
+                <tr>
+                    <th class="py-2 px-4 border-b">Train Name</th>
+                    <th class="py-2 px-4 border-b">Start Station</th>
+                    <th class="py-2 px-4 border-b">End Station</th>
+                    <th class="py-2 px-4 border-b">Total Seats</th>
+                    <th class="py-2 px-4 border-b">Arrival Time</th>
+                    <th class="py-2 px-4 border-b">Departure Time</th>
+                    <th class="py-2 px-4 border-b">Halt Duration</th>
+                    <th class="py-2 px-4 border-b">Day of Week</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for train in trains %}
+                    <tr>
+                        <td class="py-2 px-4 border-b text-center">{{ train.name }}</td>
+                        <td class="py-2 px-4 border-b text-center">{{ train.start_station }}</td>
+                        <td class="py-2 px-4 border-b text-center">{{ train.end_station }}</td>
+                        <td class="py-2 px-4 border-b text-center">{{ train.available_seats }}</td>
+                        <td class="py-2 px-4 border-b text-center">{{ train.arrival_time }}</td>
+                        <td class="py-2 px-4 border-b text-center">{{ train.departure_time }}</td>
+                        <td class="py-2 px-4 border-b text-center">{{ train.halt_duration }}</td>
+                        <td class="py-2 px-4 border-b text-center">{{ train.day_of_week }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock content %}

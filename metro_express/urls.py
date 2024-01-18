@@ -21,6 +21,7 @@ from core.views import HomeView
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
     path('admin/', admin.site.urls),
-    path('passenger/', include('passenger.urls'))
+    path('passenger/', include('passenger.urls')),
+    path('train/', include('train.urls'))
 
 ]
