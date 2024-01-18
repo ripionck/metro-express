@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect
 from django.views.generic import FormView
 from django.views import View
 from django.urls import reverse_lazy
-from django.contrib.auth import login
-from django.contrib.auth.views import LoginView
+from django.contrib.auth import login, logout
+from django.contrib.auth.views import LoginView, LogoutView
 from .forms import PassengerRegistrationForm, ProfileUpdateForm
 
 # Create your views here.
@@ -26,6 +26,14 @@ class PassengerloginView(LoginView):
 
     def get_success_url(self):
         return reverse_lazy('home')
+    
+class PassengerLogoutView(LogoutView):
+    def get_success_url(self):
+        # Logout the user and redirect to the home page
+        if self.request.user.is_authenticated:
+            logout(self.request)
+        return reverse_lazy('home')
+
     
 class ProfileUpdateView(View):
     template_name = 'passengers/passenger_profile.html'
