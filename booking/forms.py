@@ -20,4 +20,17 @@ class BookingForm(forms.ModelForm):
         if from_station and to_station and from_station == to_station:
             raise forms.ValidationError("From station and To station should be different.")
 
-        return cleaned_data
+        return 
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Add CSS classes to form fields for styling
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({
+                'class': (
+                    'appearance-none block w-full bg-gray-200 '
+                    'text-gray-700 border border-gray-200 rounded '
+                    'py-3 px-4 leading-tight focus:outline-none '
+                    'focus:bg-white focus:border-gray-500'
+                )
+            })
