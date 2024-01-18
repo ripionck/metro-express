@@ -8,8 +8,9 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.views.generic import CreateView
 from django.views import View
 from .models import Passenger
+from django.contrib import messages
 from django.urls import reverse_lazy
-from django.contrib.auth import login, logout
+from django.contrib.auth import logout
 from django.contrib.auth.views import LoginView, PasswordChangeView
 from .forms import PassengerRegistrationForm, ProfileUpdateForm, PasswordChangeForm
 
@@ -93,7 +94,12 @@ class ProfileUpdateView(View):
 class PasswordChangeView(PasswordChangeView):
     form_class = PasswordChangeForm
     template_name = 'passengers/password_change.html'
-    success_url = reverse_lazy('password_change_done')
+    success_url = reverse_lazy('passenger_profile')
+    
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, 'Your password was successfully changed.')
+        return response
 
 class PasswordChangeDoneView(PasswordChangeView):
     template_name = 'passengers/password_change_done.html'
