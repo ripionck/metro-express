@@ -5,7 +5,7 @@ from .constants import GENDER_TYPE
 
 # Create your models here.
 class Passenger(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='passengers')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='passenger')
     nid_no = models.CharField(max_length=10, unique=True)
     mobile_no = models.CharField(max_length = 12, unique=True)
     date_of_birth = models.DateField()
