@@ -12,12 +12,13 @@
         </div>
     {% endif %}
     <div class="bg-sky-200 px-3 py-4 rounded-xl">
-        <h1 class="font-bold text-2xl text-center text-sky-900 pb-5">Registration Form</h1>
         <div class="w-1/2 mx-auto mt-4">
             <form method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                 {% csrf_token %}
                 {% for hidden_field in form.hidden_fields %}{{ hidden_field.errors }} {{ hidden_field }}{% endfor %}
-                <div class="flex flex-wrap -mx-3 mb-6">
+                <h1 class="text-3xl text-center text-sky-900 pb-5 uppercase">Registration Form</h1>
+                <hr />
+                <div class="flex flex-wrap -mx-3 mb-6 mt-4">
                     <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                                for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
@@ -143,7 +144,7 @@
                         {% endif %}
                     </div>
                 </div>
-                <button class="w-full text-white border-0 bg-sky-500 hover:bg-sky-700 rounded px-4 py-2 focus:outline-none focus:shadow-outline"
+                <button class="w-full text-white border-0 bg-sky-500 hover:bg-sky-700 rounded px-4 py-2 focus:outline-none focus:shadow-outline uppercase"
                         type="submit">Register</button>
             </form>
         </div>
