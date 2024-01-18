@@ -22,6 +22,7 @@ class PassengerRegistrationForm(UserCreationForm):
     def save(self, commit=True):
         # Save the user instance
         passenger = super().save(commit=False)
+        passenger.is_active = False
         if commit:
             passenger.save()
             # Retrieve additional data from the form
@@ -35,7 +36,7 @@ class PassengerRegistrationForm(UserCreationForm):
             city = self.cleaned_data.get('city')
 
             # Create passenger instance
-            Passenger.objects.create(
+            passenger, created = Passenger.objects.get_or_create(
                 user=passenger,
                 gender=gender,
                 date_of_birth=date_of_birth,
@@ -45,9 +46,21 @@ class PassengerRegistrationForm(UserCreationForm):
                 road_no = road_no,
                 zip_code = zip_code,
                 city = city
-
             )
+            passenger.save()
         return passenger
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Add CSS classes to form fields for styling
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({
+                'class': (
+                    'appearance-none block w-full bg-gray-200 '
+                    'text-gray-700 border border-gray-200 rounded '
+                    'py-3 px-4 leading-tight focus:outline-none '
+                    'focus:bg-white focus:border-gray-500'
+                )
+            })
     
 class ProfileUpdateForm(forms.ModelForm):
     nid_no = forms.CharField(max_length=10)

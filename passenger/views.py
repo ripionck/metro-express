@@ -5,8 +5,9 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
-from django.views.generic import FormView
+from django.views.generic import CreateView
 from django.views import View
+from .models import Passenger
 from django.urls import reverse_lazy
 from django.contrib.auth import login, logout
 from django.contrib.auth.views import LoginView, PasswordChangeView
@@ -14,7 +15,8 @@ from .forms import PassengerRegistrationForm, ProfileUpdateForm, PasswordChangeF
 
 # Create your views here.
 
-class PassengerRegistrationView(FormView):
+class PassengerRegistrationView(CreateView):
+    model = Passenger
     template_name = 'passengers/passenger_register.html'
     form_class = PassengerRegistrationForm
     success_url = reverse_lazy('confirm_register')
