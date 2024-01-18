@@ -15,4 +15,4 @@ class Booking(models.Model):
     booking_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.user.first_name}, train: {self.train.name}, total seats: {self.seats_booked}'
+        return f'Passenger: {self.user.first_name} {self.user.last_name} , Train: {self.train.name}, Total seats: {self.seats_booked}, Class: {self.class_type}, From: {self.from_station}, To: {self.to_station}'
