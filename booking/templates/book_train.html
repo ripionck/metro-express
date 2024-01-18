@@ -4,7 +4,7 @@
 {% endblock title %}
 {% block content %}
     <h1>Book Train</h1>
-    <form method="post" action="{% url 'book_train' train.id %}">
+    <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Book Now</button>

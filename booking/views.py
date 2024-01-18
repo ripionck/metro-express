@@ -27,19 +27,21 @@ class BookTrainView(FormView):
         train_id = self.kwargs['train_id']
         train = get_object_or_404(Train, id=train_id)
 
-        seat_count = form.cleaned_data['seat_count']
+        seat_count = form.cleaned_data['seats_booked']
+        selected_seat = form.cleaned_data['selected_seat']
 
         # Check if there are enough available seats
         if train.available_seats >= seat_count:
             # Create a booking
-            booking = Booking.objects.create(user=user, train=train, seat_count=seat_count)
+            booking = Booking.objects.create(user=user, train=train, seats_booked=seat_count,
+                                             selected_seat=selected_seat)
             
             # Update available seats on the train
             train.available_seats -= seat_count
             train.save()
 
             # Redirect to a success page or display a success message
-            return redirect('booking_success', booking_id=booking.id)
+            return redirect('booking_list')
         else:
             # Display an error message if there are not enough available seats
             form.add_error('seat_count', 'Not enough available seats.')

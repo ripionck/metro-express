@@ -1,12 +1,49 @@
 {% extends 'base.html' %}
 {% block title %}
-    Search Results
+    Metro Express | Search Result
 {% endblock title %}
 {% block content %}
-    <h1>Search Results</h1>
-    {% if search_results %}
-        <ul>
-            {% for result in search_results %}<li>{{ result }}</li>{% endfor %}
-        </ul>
-    {% endif %}
+    <div class="container mx-auto pt-8 h-screen">
+        <h1 class="text-2xl font-bold mb-4">Train Information</h1>
+        <table class="min-w-full bg-white border border-gray-300">
+            <thead>
+                <tr>
+                    <th class="py-2 px-4 border-b">Train Name</th>
+                    <th class="py-2 px-4 border-b">Start Station</th>
+                    <th class="py-2 px-4 border-b">End Station</th>
+                    <th class="py-2 px-4 border-b">Total Seats</th>
+                    <th class="py-2 px-4 border-b">Arrival Time</th>
+                    <th class="py-2 px-4 border-b">Departure Time</th>
+                    <th class="py-2 px-4 border-b">Halt Duration</th>
+                    <th class="py-2 px-4 border-b"></th>
+                </tr>
+            </thead>
+            {% if search_results %}
+                <tbody>
+                    {% for result in search_results %}
+                        <tr>
+                            <td class="py-2 px-4 border-b text-center">{{ result.name }}</td>
+                            <td class="py-2 px-4 border-b text-center">{{ result.start_station }}</td>
+                            <td class="py-2 px-4 border-b text-center">{{ result.end_station }}</td>
+                            <td class="py-2 px-4 border-b text-center">{{ result.available_seats }}</td>
+                            <td class="py-2 px-4 border-b text-center">{{ result.arrival_time }}</td>
+                            <td class="py-2 px-4 border-b text-center">{{ result.departure_time }}</td>
+                            <td class="py-2 px-4 border-b text-center">{{ result.halt_duration }}</td>
+                            {% if request.user.is_authenticated %}
+                                <td class="py-2 px-4 border-b text-center">
+                                    <a href="{% url 'book_train' result.id %}"
+                                       class="border-0 bg-sky-700 rounded px-2 py-1.5 text-white hover:bg-sky-400">Book Now</a>
+                                </td>
+                            {% else %}
+                                <td class="py-2 px-4 border-b text-center">
+                                    <a href="{% url 'passenger_register' %}"
+                                       class="border-0 bg-sky-700 rounded px-2 py-1.5 text-white hover:bg-sky-400">Register For Book</a>
+                                </td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            {% endif %}
+        </table>
+    </div>
 {% endblock %}
