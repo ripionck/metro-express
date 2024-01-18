@@ -6,7 +6,7 @@ urlpatterns = [
     path('confirm-message/', RegistrationConfirmationView.as_view(), name='confirm_register'),
     path('activate/<uid64>/<token>/', ActivateAccountView.as_view(), name='activate_account'),
     path('login/', PassengerloginView.as_view(), name='passenger_login'),
-    path('logout/', PassengerLogoutView.as_view(), name='passenger_logout'),
+    path('logout/', PassengerLogoutView, name='passenger_logout'),
     path('profile/', ProfileUpdateView.as_view(), name='passenger_profile'),
     path('password-change/', PasswordChangeView.as_view(), name='password_change'),
     path('password_change/done/', PasswordChangeDoneView.as_view(),

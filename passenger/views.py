@@ -9,7 +9,7 @@ from django.views.generic import FormView
 from django.views import View
 from django.urls import reverse_lazy
 from django.contrib.auth import login, logout
-from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
+from django.contrib.auth.views import LoginView, PasswordChangeView
 from .forms import PassengerRegistrationForm, ProfileUpdateForm, PasswordChangeForm
 
 # Create your views here.
@@ -19,13 +19,6 @@ class PassengerRegistrationView(FormView):
     form_class = PassengerRegistrationForm
     success_url = reverse_lazy('confirm_register')
 
-    # def form_valid(self, form):
-    #     print(form.cleaned_data)
-    #     # Save the user instance and log in the user
-    #     user = form.save()
-    #     login(self.request, user)
-    #     # Redirect to the success URL (user's profile page)
-    #     return super().form_valid(form)
     def form_valid(self, form):
         user = form.save()
 
@@ -72,12 +65,11 @@ class PassengerloginView(LoginView):
     def get_success_url(self):
         return reverse_lazy('home')
     
-class PassengerLogoutView(LogoutView):
-     def get_success_url(self):
-        # Logout the user and redirect to the home page
-        if self.request.user.is_authenticated:
-            logout(self.request)
-        return reverse_lazy('home')
+
+def PassengerLogoutView(request):
+    logout(request)
+    return redirect('home')
+
     
 class ProfileUpdateView(View):
     template_name = 'passengers/passenger_profile.html'

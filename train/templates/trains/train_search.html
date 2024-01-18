@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2>Search Results</h2>
+    {% if search_results %}
+        <ul>
+            {% for train in search_results %}
+                <li>{{ train.from_station }} to {{ train.to_station }} on {{ train.date }} (Class: {{ train.travel_class }})</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No results found.</p>
+    {% endif %}
+{% endblock %}
