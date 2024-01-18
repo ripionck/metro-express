@@ -24,24 +24,31 @@ class TrainSearchView(FormView):
         date = form.cleaned_data['date']
         travel_class = form.cleaned_data['travel_class']
 
-        # Get the related stations using their names
-        from_station = get_object_or_404(Station, name__iexact=from_station_name)
-        to_station = get_object_or_404(Station, name__iexact=to_station_name)
+        try:
+            # Get the related stations using their names
+            from_station = Station.objects.get(name__iexact=from_station_name)
+            to_station = Station.objects.get(name__iexact=to_station_name)
 
-        # Filter the queryset based on the form data
-        search_results = Train.objects.filter(
-            start_station__exact=from_station,
-            end_station__exact=to_station,
-        )
+            # Filter the queryset based on the form data
+            search_results = Train.objects.filter(
+                start_station__exact=from_station,
+                end_station__exact=to_station,
+            )
 
-        context = {'search_results': search_results}
-        return render(self.request, 'trains/search_results.html', context)
+            context = {'search_results': search_results}
+            return render(self.request, 'trains/search_results.html', context)
+        except Station.DoesNotExist:
+            return render(self.request, 'trains/not_found.html')  
+        
+    # def form_invalid(self, form):
+    #     # Handle the case when the form is invalid
+    #     return self.render_to_response(self.get_context_data(form=form))
 
-    def form_invalid(self, form):
-        # Handle the case when the form is invalid
-        return self.render_to_response(self.get_context_data(form=form))
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        # You can add additional context variables if needed
-        return context
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     # You can add additional context variables if needed
+    #     return context
+        
+class NotFoundView(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'not_found.html')
