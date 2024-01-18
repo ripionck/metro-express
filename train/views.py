@@ -1,9 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views import View
-from .models import Train
 from django.views.generic import FormView
+from .models import Train, Station
 from .forms import TrainSearchForm
-from django.http import HttpResponse
+
+
 
 # Create your views here.
 class TrainListView(View):
@@ -12,28 +13,29 @@ class TrainListView(View):
     def get(self, request):
         trains = Train.objects.all()
         return render(request, self.template_name, {'trains': trains})
-    
+
 class TrainSearchView(FormView):
     template_name = 'index.html'
     form_class = TrainSearchForm
-    success_url = 'search_train'
 
     def form_valid(self, form):
-        from_station = form.cleaned_data['from_station']
-        to_station = form.cleaned_data['to_station']
+        from_station_name = form.cleaned_data['from_station']
+        to_station_name = form.cleaned_data['to_station']
         date = form.cleaned_data['date']
         travel_class = form.cleaned_data['travel_class']
 
+        # Get the related stations using their names
+        from_station = get_object_or_404(Station, name__iexact=from_station_name)
+        to_station = get_object_or_404(Station, name__iexact=to_station_name)
+
         # Filter the queryset based on the form data
         search_results = Train.objects.filter(
-            from_station__iexact=from_station,
-            to_station__iexact=to_station,
-            date=date,
-            travel_class__iexact=travel_class
+            start_station__exact=from_station,
+            end_station__exact=to_station,
         )
 
         context = {'search_results': search_results}
-        return self.render_to_response(self.get_context_data(form=form, **context))
+        return render(self.request, 'trains/search_results.html', context)
 
     def form_invalid(self, form):
         # Handle the case when the form is invalid
