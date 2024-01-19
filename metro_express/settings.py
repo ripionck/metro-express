@@ -31,6 +31,7 @@ SECRET_KEY = env("SECRET_KEY")
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
+CSRF_TRUSTED_ORIGINS = ["https://metro-express.onrender.com", "http://127.0.0.1:8080"]
 
 
 # Application definition
