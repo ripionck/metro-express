@@ -1,8 +1,9 @@
 from django.urls import path
-from .views import PassengerRegistrationView, activate,PassengerloginView, ProfileUpdateView, PassengerLogoutView, PasswordChangeView
+from .views import PassengerRegistrationView, RegistrationConfirmationView, activate,PassengerloginView, ProfileUpdateView, PassengerLogoutView, PasswordChangeView
 
 urlpatterns = [
     path('register/', PassengerRegistrationView.as_view(), name='passenger_register'),
+    path('confirm-message/', RegistrationConfirmationView.as_view(), name='confirm_register'),
     path('active/<uid64>/<token>/', activate, name='activate'),
     path('login/', PassengerloginView.as_view(), name='passenger_login'),
     path('logout/', PassengerLogoutView, name='passenger_logout'),
