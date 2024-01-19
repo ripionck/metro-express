@@ -49,6 +49,7 @@ class PassengerRegistrationForm(UserCreationForm):
             )
             passenger.save()
         return passenger
+    
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # Add CSS classes to form fields for styling
