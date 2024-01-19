@@ -21,12 +21,10 @@ class PassengerRegistrationView(CreateView):
     model = Passenger
     template_name = 'passengers/passenger_register.html'
     form_class = PassengerRegistrationForm
-    success_url = reverse_lazy('confirm_register')
+    success_url = reverse_lazy('passenger_register')
 
     def form_valid(self, form):
-        user = form.save(commit=False)
-        user.username = user.username
-        user.save()
+        user = form.save()
 
         # Generate token and confirmation link
         token = default_token_generator.make_token(user)
@@ -39,8 +37,8 @@ class PassengerRegistrationView(CreateView):
         email = EmailMultiAlternatives(email_subject, '', to=[user.email])
         email.attach_alternative(email_body, 'text/html')
         email.send()
-
-        return redirect(self.success_url)
+        messages.success(self.request, 'User creation successfull, please check your email to active account.')
+        return super().form_valid(form)
         
 
 class RegistrationConfirmationView(View):
