@@ -11,6 +11,7 @@ html-void-elements
 jsbeautifier
 json5
 pathspec
+psycopg2
 PyYAML
 regex
 six
