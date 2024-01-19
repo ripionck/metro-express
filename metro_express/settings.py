@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import dj_database_url
 import environ
 # Initialise environment variables
 env = environ.Env()
@@ -89,6 +90,13 @@ WSGI_APPLICATION = 'metro_express.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+
+DATABASES = {
+    'default': dj_database_url.config(
+        default='postgres://metro_express_user:d3NILa8pcYmV5gb4N2ihflHCW4egGEQJ@dpg-cmksrp6n7f5s73auiu7g-a.oregon-postgres.render.com/metro_express',
+        conn_max_age=600
+    )
+}
 
 DATABASES = {
     'default': {

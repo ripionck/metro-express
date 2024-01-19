@@ -2,6 +2,7 @@ asgiref
 click
 colorama
 cssbeautifier
+dj-database-url
 Django
 django-environ
 djlint
@@ -17,4 +18,5 @@ regex
 six
 sqlparse
 tqdm
+typing_extensions
 tzdata
