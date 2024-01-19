@@ -23,32 +23,31 @@ class PassengerRegistrationView(CreateView):
     form_class = PassengerRegistrationForm
     success_url = reverse_lazy('confirm_register')
 
-    def post(self, request):
-        form = self.form_class(request.POST)
+    def form_valid(self, form):
+        user = form.save(commit=False)
+        user.username = user.username
+        user.save()
 
-        if form.is_valid():
-            user = form.save()
+        # Generate token and confirmation link
+        token = default_token_generator.make_token(user)
+        uid = urlsafe_base64_encode(force_bytes(user.pk))
+        confirm_link = f'http://127.0.0.1:8000/passenger/active/{uid}/{token}'
 
-            # Generate token and confirmation link
-            token = default_token_generator.make_token(user)
-            uid = urlsafe_base64_encode(force_bytes(user.pk))
-            confirm_link = f'http://127.0.0.1:8000/passenger/active/{uid}/{token}'
+        # Send confirmation email
+        email_subject = 'Confirm Your Email'
+        email_body = render_to_string('passengers/confirm_email.html', {'confirm_link': confirm_link})
+        email = EmailMultiAlternatives(email_subject, '', to=[user.email])
+        email.attach_alternative(email_body, 'text/html')
+        email.send()
 
-            # Send confirmation email
-            email_subject = 'Confirm Your Email'
-            email_body = render_to_string('passengers/confirm_email.html', {'confirm_link': confirm_link})
-            email = EmailMultiAlternatives(email_subject, '', to=[user.email])
-            email.attach_alternative(email_body, 'text/html')
-            email.send()
-
-            return redirect(self.success_url)
+        return redirect(self.success_url)
         
 
 class RegistrationConfirmationView(View):
     template_name = 'passengers/confirm_message.html'
 
-    def get_success_url(self):
-        return reverse_lazy('confirm_register')
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
 
 
 def activate( request, uid64, token):
