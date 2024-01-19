@@ -18,6 +18,13 @@ class PassengerRegistrationForm(UserCreationForm):
         model = User
         fields = ['username', 'password1', 'password2', 'first_name', 'last_name', 'email',
                  'date_of_birth', 'gender', 'nid_no', 'mobile_no', 'house_no', 'road_no', 'zip_code', 'city']
+        
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError('This email address is already exists.')
+        return email
+    
 
     def save(self, commit=True):
     # Save the user instance
