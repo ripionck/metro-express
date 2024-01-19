@@ -15,7 +15,7 @@ class PassengerRegistrationForm(UserCreationForm):
     city = forms.CharField(max_length=20)
 
     class Meta:
-        model = Passenger
+        model = User
         fields = ['username', 'password1', 'password2', 'first_name', 'last_name', 'email',
                  'date_of_birth', 'gender', 'nid_no', 'mobile_no', 'house_no', 'road_no', 'zip_code', 'city']
 
