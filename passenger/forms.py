@@ -20,11 +20,13 @@ class PassengerRegistrationForm(UserCreationForm):
                  'date_of_birth', 'gender', 'nid_no', 'mobile_no', 'house_no', 'road_no', 'zip_code', 'city']
 
     def save(self, commit=True):
-        # Save the user instance
-        passenger = super().save(commit=False)
-        passenger.is_active = False
+    # Save the user instance
+        user_instance = super().save(commit=False)
+        user_instance.is_active = False  
+
         if commit:
-            passenger.save()
+            user_instance.save()
+
             # Retrieve additional data from the form
             gender = self.cleaned_data.get('gender')
             nid_no = self.cleaned_data.get('nid_no')
@@ -36,19 +38,19 @@ class PassengerRegistrationForm(UserCreationForm):
             city = self.cleaned_data.get('city')
 
             # Create passenger instance
-            passenger, created = Passenger.objects.get_or_create(
-                user=passenger,
+            Passenger.objects.create(
+                user=user_instance,
                 gender=gender,
                 date_of_birth=date_of_birth,
                 nid_no=nid_no,
                 mobile_no=mobile_no,
                 house_no=house_no,
-                road_no = road_no,
-                zip_code = zip_code,
-                city = city
+                road_no=road_no,
+                zip_code=zip_code,
+                city=city
             )
-            passenger.save()
-        return passenger
+
+        return user_instance
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

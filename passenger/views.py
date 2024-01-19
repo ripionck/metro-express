@@ -8,7 +8,6 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.views.generic import CreateView
 from django.views import View
 from django.contrib.auth.models import User
-from .models import Passenger
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.contrib.auth import logout, login
@@ -18,20 +17,20 @@ from .forms import PassengerRegistrationForm, ProfileUpdateForm, PasswordChangeF
 # Create your views here.
 
 class PassengerRegistrationView(CreateView):
-    model = Passenger
+    model = User
     template_name = 'passengers/passenger_register.html'
     form_class = PassengerRegistrationForm
     success_url = reverse_lazy('confirm_register')
 
     def form_valid(self, form):
-        user = form.save(commit=False)
+        user = form.save()
         user.username = user.username
         user.save()
 
         # Generate token and confirmation link
         token = default_token_generator.make_token(user)
         uid = urlsafe_base64_encode(force_bytes(user.pk))
-        confirm_link = f'https://metro-express.onrender.com/passenger/active/{uid}/{token}'
+        confirm_link = f'http://127.0.0.1:8000/passenger/active/{uid}/{token}'
 
         # Send confirmation email
         email_subject = 'Confirm Your Email'
