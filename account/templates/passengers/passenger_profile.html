@@ -96,59 +96,16 @@
                     </div>
                 </div>
                 <div class="flex flex-wrap -mx-3 mb-6">
-                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                    <div class="w-full md:w-full px-3 mb-6 md:mb-0">
                         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                               for="{{ form.road_no.id_for_label }}">{{ form.road_no.label }}</label>
-                        {{ form.road_no }}
-                        {% if form.road_no.errors %}
-                            {% for error in form.road_no.errors %}<p class="text-red-600 text-sm italic pb-2">{{ error }}</p>{% endfor %}
-                        {% endif %}
-                    </div>
-                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                               for="{{ form.house_no.id_for_label }}">{{ form.house_no.label }}</label>
-                        {{ form.house_no }}
-                        {% if form.house_no.errors %}
-                            {% for error in form.house_no.errors %}<p class="text-red-600 text-sm italic pb-2">{{ error }}</p>{% endfor %}
+                               for="{{ form.address.id_for_label }}">{{ form.address.label }}</label>
+                        {{ form.address }}
+                        {% if form.address.errors %}
+                            {% for error in form.address.errors %}<p class="text-red-600 text-sm italic pb-2">{{ error }}</p>{% endfor %}
                         {% endif %}
                     </div>
                 </div>
-                <div class="flex flex-wrap -mx-3 mb-6">
-                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                               for="{{ form.zip_code.id_for_label }}">{{ form.zip_code.label }}</label>
-                        {{ form.zip_code }}
-                        {% if form.zip_code.errors %}
-                            {% for error in form.zip_code.errors %}<p class="text-red-600 text-sm italic pb-2">{{ error }}</p>{% endfor %}
-                        {% endif %}
-                    </div>
-                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                               for="{{ form.city.id_for_label }}">{{ form.city.label }}</label>
-                        {{ form.city }}
-                        {% if form.city.errors %}
-                            {% for error in form.city.errors %}<p class="text-red-600 text-sm italic pb-2">{{ error }}</p>{% endfor %}
-                        {% endif %}
-                    </div>
-                </div>
-                <div class="flex flex-wrap -mx-3 mb-2">
-                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                               for="{{ form.password1.id_for_label }}">{{ form.password1.label }}</label>
-                        {{ form.password1 }}
-                        {% if form.password1.errors %}
-                            {% for error in form.password1.errors %}<p class="text-red-600 text-sm italic pb-2">{{ error }}</p>{% endfor %}
-                        {% endif %}
-                    </div>
-                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                               for="{{ form.password2.id_for_label }}">{{ form.password2.label }}</label>
-                        {{ form.password2 }}
-                        {% if form.password2.errors %}
-                            {% for error in form.password2.errors %}<p class="text-red-600 text-sm italic pb-2">{{ error }}</p>{% endfor %}
-                        {% endif %}
-                    </div>
-                </div>
+                
                 <button class="w-full text-white border-0 bg-sky-500 hover:bg-sky-700 rounded px-4 py-2 focus:outline-none focus:shadow-outline uppercase"
                         type="submit">Update</button>
                 <br />
