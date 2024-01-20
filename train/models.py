@@ -62,4 +62,4 @@ class TrainReview(models.Model):
 
     
     def __str__(self):
-        return f'{self.user.first_name} - {self.comment}'
+        return f'{self.train.name} - {self.comment}'

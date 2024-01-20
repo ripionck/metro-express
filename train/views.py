@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.views import View
 from django.views.generic import FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Train, Station, TrainReview
+from .models import Train, Station, Schedule, TrainReview
 from .forms import TrainSearchForm
 
 
@@ -16,6 +16,13 @@ class TrainListView(View):
     def get(self, request):
         trains = Train.objects.all()
         return render(request, self.template_name, {'trains': trains})
+    
+class ScheduleView(View):
+    template_name = 'trains/schedule.html'
+
+    def get(self, request, train_id):
+        schedule = Schedule.objects.filter(train_id=train_id)
+        return render(request, self.template_name, {'schedule': schedule})
 
 class TrainSearchView(FormView):
     template_name = 'index.html'
