@@ -8,12 +8,24 @@
                         <a class="text-white hover:underline" href="{% url 'home' %}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="text-white hover:underline" href="{% url 'trains' %}">Train Information</a>
+                        <a class="text-white hover:underline" href="{% url 'train_list' %}">Train Information</a>
                     </li>
                     <li class="nav-item">
                         <a class="text-white hover:underline" href="{% url 'contact_us' %}">Contact Us</a>
                     </li>
                     {% if request.user.is_authenticated %}
+                        {% if request.user.is_staff %}
+                            <!-- Display these options only if the user is an admin -->
+                            <li class="nav-item">
+                                <a class="text-white hover:underline" href="{% url 'train_create' %}">Add Train</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="text-white hover:underline" href="{% url 'schedule_create' %}">Add Schedule</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="text-white hover:underline" href="{% url 'schedule_list' %}">Train Schedule</a>
+                            </li>
+                        {% endif %}
                         <li class="nav-item">
                             <a class="text-white hover:underline"
                                href="{% url 'passenger_profile' %}">Profile</a>

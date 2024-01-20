@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head_title %}
+    Metro Express | Update Train
+{% endblock head_title %}
+{% block content %}
+    {% if form.non_field_errors %}
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-2"
+             role="alert">
+            <p class="font-bold">Error!</p>
+            <p class="block sm:inline">{{ form.non_field_errors }}</p>
+        </div>
+    {% endif %}
+    <div class="h-screen bg-sky-200 px-3 py-4 rounded-xl">
+        <div class="w-1/2 mx-auto mt-4">
+            <form method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                {% csrf_token %}
+                {% for hidden_field in form.hidden_fields %}{{ hidden_field.errors }} {{ hidden_field }}{% endfor %}
+                <h1 class="text-3xl text-center text-sky-900 pb-5 uppercase">Update Train</h1>
+                <hr />
+                <div class="flex flex-wrap -mx-3 mb-6 mt-4">
+                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                               for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+                        {{ form.name }}
+                        {% if form.name.errors %}
+                            {% for error in form.name.errors %}<p class="text-red-600 text-sm italic pb-2">{{ error }}</p>{% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                               for="{{ form.available_seats.id_for_label }}">{{ form.available_seats.label }}</label>
+                        {{ form.available_seats }}
+                        {% if form.available_seats.errors %}
+                            {% for error in form.available_seats.errors %}<p class="text-red-600 text-sm italic pb-2">{{ error }}</p>{% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="flex flex-wrap -mx-3 mb-6">
+                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                               for="{{ form.start_station.id_for_label }}">{{ form.start_station.label }}</label>
+                        {{ form.start_station }}
+                        {% if form.start_station.errors %}
+                            {% for error in form.start_station.errors %}<p class="text-red-600 text-sm italic pb-2">{{ error }}</p>{% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                               for="{{ form.end_station.id_for_label }}">{{ form.end_station.label }}</label>
+                        {{ form.end_station }}
+                        {% if form.end_station.errors %}
+                            {% for error in form.end_station.errors %}<p class="text-red-600 text-sm italic pb-2">{{ error }}</p>{% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="flex flex-wrap -mx-3 mb-6">
+                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                               for="{{ form.route_stations.id_for_label }}">{{ form.route_stations.label }}</label>
+                        {{ form.route_stations }}
+                        {% if form.route_stations.errors %}
+                            {% for error in form.route_stations.errors %}<p class="text-red-600 text-sm italic pb-2">{{ error }}</p>{% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                               for="{{ form.day_of_week.id_for_label }}">{{ form.day_of_week.label }}</label>
+                        {{ form.day_of_week }}
+                        {% if form.day_of_week.errors %}
+                            {% for error in form.day_of_week.errors %}<p class="text-red-600 text-sm italic pb-2">{{ error }}</p>{% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+                <button class="w-full text-white border-0 bg-sky-500 hover:bg-sky-700 rounded px-4 py-2 focus:outline-none focus:shadow-outline uppercase"
+                        type="submit">Update Train</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

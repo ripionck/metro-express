@@ -1,24 +1,67 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views import View
-from django.views.generic import FormView
+from django.views.generic import FormView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import UserPassesTestMixin
 from .models import Train, Station, Schedule, TrainReview
-from .forms import TrainSearchForm
-
+from .forms import TrainForm, TrainUpdateForm, TrainSearchForm, ScheduleForm, ScheduleUpdateForm
 
 
 # Create your views here.
+class AdminRequiredMixin(UserPassesTestMixin):
+    def test_func(self):
+        return self.request.user.is_authenticated and self.request.user.is_staff
+
+class TrainCreateView(AdminRequiredMixin, CreateView):
+    model = Train
+    form_class = TrainForm
+    template_name = 'train/train_create.html'
+    success_url = reverse_lazy('train_list')
+
+class TrainUpdateView(AdminRequiredMixin, UpdateView):
+    model = Train
+    form_class = TrainUpdateForm
+    success_url = reverse_lazy('train_list')
+    template_name = 'train/train_update.html'
+
+class TrainDeleteView(AdminRequiredMixin, DeleteView):
+    model = Train
+    success_url = reverse_lazy('train_list') 
+
+class ScheduleCreateView(AdminRequiredMixin, CreateView):
+    model = Schedule
+    form_class = ScheduleForm
+    template_name = 'schedule/schedule_create.html'
+    success_url = reverse_lazy('schedule_view')
+
+class ScheduleUpdateView(AdminRequiredMixin, UpdateView):
+    model = Schedule
+    form_class = ScheduleUpdateForm
+    template_name = 'schedule/schedule_update.html'
+    success_url = reverse_lazy('schedule_list')
+
+class ScheduleDeleteView(AdminRequiredMixin, DeleteView):
+    model = Schedule
+    success_url = reverse_lazy('schedule_list')  
+
 class TrainListView(View):
-    template_name = 'trains/trains_list.html'
+    template_name = 'train/trains_list.html'
 
     def get(self, request):
         trains = Train.objects.all()
         return render(request, self.template_name, {'trains': trains})
     
+class ScheduleListView(View):
+    template_name = 'schedule/schedule_list.html'
+
+    def get(self, request):
+        schedules= Schedule.objects.all()
+        return render(request, self.template_name, {'schedules': schedules})
+    
 class ScheduleView(View):
-    template_name = 'trains/schedule.html'
+    template_name = 'schedule/schedule_view.html'
 
     def get(self, request, train_id):
         schedule = Schedule.objects.filter(train_id=train_id)
@@ -46,16 +89,16 @@ class TrainSearchView(FormView):
             )
 
             context = {'search_results': search_results}
-            return render(self.request, 'trains/search_results.html', context)
+            return render(self.request, 'train/search_results.html', context)
         except Station.DoesNotExist:
-            return render(self.request, 'trains/not_found.html')  
+            return render(self.request, 'train/not_found.html')  
    
 class NotFoundView(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'not_found.html')
     
 class TrainReviewView(LoginRequiredMixin, View):
-    template_name = 'trains/train_review.html'
+    template_name = 'train/train_review.html'
 
     def get(self, request, train_id):
         train = get_object_or_404(Train, id=train_id)

@@ -29,9 +29,19 @@
                                 {% if not forloop.last %},{% endif %}
                             {% endfor %}
                         </td>
-                        <td class="py-2 px-4 border-b text-center">
-                            <a href="{% url 'schedule_view' train_id=train.id %}">View Schedule</a>
-                        </td>
+                        {% if request.user.is_authenticated and request.user.is_staff %}
+                            <!-- Display these options only if the user is an admin -->
+                            <td class="py-2 px-4 border-b text-center">
+                                <a href="{% url 'train_update' pk=train.id %}">Update</a>
+                            </td>
+                            <td class="py-2 px-4 border-b text-center">
+                                <a href="{% url 'train_delete' pk=train.id %}">Delete</a>
+                            </td>
+                        {% else %}
+                            <td class="py-2 px-4 border-b text-center">
+                                <a href="{% url 'schedule_view' train_id=train.id %}">View Schedule</a>
+                            </td>
+                        {% endif %}
                     </tr>
                 {% endfor %}
             </tbody>
