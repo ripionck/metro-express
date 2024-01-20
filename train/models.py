@@ -17,17 +17,22 @@ class Station(models.Model):
 class Day(models.Model):
     name = models.CharField(max_length=100)
 
+    def __str__(self):
+        return self.name
+
 class Train(models.Model):
     name = models.CharField(max_length=100)
-    slug = models.SlugField(max_length=100, unique=True, editable=False)
+    slug = models.SlugField(max_length=100)
     available_seats = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(1000)])
     day_of_week = models.ManyToManyField(Day)
     start_station = models.ForeignKey(Station, on_delete=models.CASCADE, related_name='start_station', null=True, blank=True)
     end_station = models.ForeignKey(Station, on_delete=models.CASCADE, related_name='end_station', null=True, blank=True)
-    distance = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(5000)])
     route_stations = models.ManyToManyField(Station)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
@@ -38,7 +43,10 @@ class Schedule(models.Model):
     station = models.ForeignKey(Station, on_delete=models.CASCADE)
     arrival_time = models.DateTimeField()
     departure_time = models.DateTimeField()
-    halt_duration_minutes = models.PositiveIntegerField(help_text="Halt duration in minutes")
+    halt_duration_minutes = models.DurationField()
+
+    def __str__(self):
+        return f'{self.train.name}'
 
     def clean(self):
         if self.arrival_time and self.departure_time and self.arrival_time >= self.departure_time:

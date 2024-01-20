@@ -4,7 +4,7 @@ from .models import Train, Station, Day, Schedule, TrainReview
 
 # Register your models here.
 class TrainAdmin(admin.ModelAdmin):
-    list_display = ('name', 'get_schedule_display', 'start_station', 'end_station', 'distance')
+    list_display = ('name', 'get_schedule_display', 'start_station', 'end_station')
     list_filter = ('schedule',)
     search_fields = ('name',)
     prepopulated_fields = {'slug': ('name',)}
@@ -14,7 +14,10 @@ class TrainAdmin(admin.ModelAdmin):
     
     get_schedule_display.short_description = 'Schedule'
 
-admin.site.register(Station)
+class StationAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'slug': ('name',)}
+
+admin.site.register(Station, StationAdmin)
 admin.site.register(Day)
 admin.site.register(Schedule)
 admin.site.register(Train, TrainAdmin)
