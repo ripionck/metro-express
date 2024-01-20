@@ -20,7 +20,6 @@ class Day(models.Model):
 class Train(models.Model):
     name = models.CharField(max_length=100)
     slug = models.SlugField(max_length=100, unique=True, editable=False)
-    train_type = models.CharField(max_length=20)
     available_seats = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(1000)])
     day_of_week = models.ManyToManyField(Day)
     start_station = models.ForeignKey(Station, on_delete=models.CASCADE, related_name='start_station', null=True, blank=True)
