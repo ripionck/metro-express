@@ -1,11 +1,10 @@
-
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import FormView
-from .models import Booking
+from .models import Ticket
 from train.models import Train
-from .forms import BookingForm
+from .forms import TicketForm
 
 
 # Create your views here
@@ -13,14 +12,14 @@ class BookingListView(LoginRequiredMixin, View):
     template_name = 'booking_list.html'
 
     def get(self, request, *args, **kwargs):
-        user_bookings = Booking.objects.filter(user=request.user)
+        user_bookings = Ticket.objects.filter(user=request.user)
         print(user_bookings)
         return render(request, self.template_name, {'user_bookings': user_bookings})
 
 
 class BookTrainView(FormView):
     template_name = 'book_train.html'
-    form_class = BookingForm
+    form_class = TicketForm
 
     def form_valid(self, form):
         user = self.request.user
@@ -36,7 +35,7 @@ class BookTrainView(FormView):
         # Check if there are enough available seats
         if train.available_seats >= seat_count:
             # Create a booking
-            booking = Booking.objects.create(user=user, train=train, seats_booked=seat_count,
+            Ticket.objects.create(user=user, train=train, seats_booked=seat_count,
                                              selected_seat=selected_seat, class_type=class_type,from_station=from_station,to_station=to_station)
             
             # Update available seats on the train

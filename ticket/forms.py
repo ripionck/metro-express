@@ -1,16 +1,15 @@
-# forms.py
 from django import forms
-from .models import Booking, SEAT_CLASS_TYPES
+from .models import Ticket, SEAT_CLASS_TYPES
 from train.models import Station
 
-class BookingForm(forms.ModelForm):
+class TicketForm(forms.ModelForm):
     class Meta:
-        model = Booking
-        fields = ['class_type', 'seats_booked', 'selected_seat', 'from_station', 'to_station']
+        model = Ticket
+        fields = ['class_type', 'seats_quantity', 'selected_seat', 'from_station', 'to_station']
 
-    class_type = forms.ChoiceField(choices=SEAT_CLASS_TYPES, required=False)
-    from_station = forms.ModelChoiceField(queryset=Station.objects.all(), required=False)
-    to_station = forms.ModelChoiceField(queryset=Station.objects.all(), required=False)
+    class_type = forms.ChoiceField(choices=SEAT_CLASS_TYPES)
+    from_station = forms.ModelChoiceField(queryset=Station.objects.all())
+    to_station = forms.ModelChoiceField(queryset=Station.objects.all())
 
     def clean(self):
         cleaned_data = super().clean()
