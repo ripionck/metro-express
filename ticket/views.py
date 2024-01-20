@@ -13,7 +13,6 @@ class BookingListView(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         user_bookings = Ticket.objects.filter(user=request.user)
-        print(user_bookings)
         return render(request, self.template_name, {'user_bookings': user_bookings})
 
 
@@ -26,25 +25,39 @@ class BookTrainView(FormView):
         train_id = self.kwargs['train_id']
         train = get_object_or_404(Train, id=train_id)
 
-        seat_count = form.cleaned_data['seats_booked']
+        seats_quantity = form.cleaned_data['seats_quantity']
         selected_seat = form.cleaned_data['selected_seat']
         class_type = form.cleaned_data['class_type']
         from_station = form.cleaned_data['from_station']
         to_station = form.cleaned_data['to_station']
 
         # Check if there are enough available seats
-        if train.available_seats >= seat_count:
-            # Create a booking
-            Ticket.objects.create(user=user, train=train, seats_booked=seat_count,
-                                             selected_seat=selected_seat, class_type=class_type,from_station=from_station,to_station=to_station)
-            
-            # Update available seats on the train
-            train.available_seats -= seat_count
-            train.save()
+        if train.available_seats >= seats_quantity:
+            # Calculate ticket prices
+            ticket = Ticket(user=user, train=train, seats_quantity=seats_quantity,
+                            selected_seat=selected_seat, class_type=class_type,
+                            from_station=from_station, to_station=to_station)
+            ticket.calculate_prices()
 
-            return redirect('booking_list')
+            # Check user's balance
+            if user.passenger_profile.balance >= ticket.total_price:
+                # Create a booking
+                ticket.save()
+
+                # Update available seats on the train
+                train.available_seats -= seats_quantity
+                train.save()
+
+                # Deduct the total price from the user's balance
+                user.passenger_profile.balance -= ticket.total_price
+                user.passenger_profile.save()
+
+                return redirect('booking_list')
+            else:
+                form.add_error(None, 'Insufficient balance. Please deposit more funds.')
+                return self.form_invalid(form)
         else:
-            form.add_error('seat_count', 'Not enough available seats.')
+            form.add_error('seats_quantity', 'Not enough available seats.')
             return self.form_invalid(form)
 
     def form_invalid(self, form):

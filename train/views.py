@@ -55,7 +55,7 @@ class NotFoundView(View):
         return render(request, 'not_found.html')
     
 class TrainReviewView(LoginRequiredMixin, View):
-    template_name = 'train_review.html'
+    template_name = 'trains/train_review.html'
 
     def get(self, request, train_id):
         train = get_object_or_404(Train, id=train_id)
