@@ -65,6 +65,6 @@ class TrainReviewView(LoginRequiredMixin, View):
     def post(self, request, train_id):
         train = get_object_or_404(Train, id=train_id)
         comment = request.POST.get('comment')
-        user_review = TrainReview(train=train, user=request.user, comment=comment)
+        user_review = TrainReview(train=train, user=request.user.passenger_profile, comment=comment)
         user_review.save()
         return HttpResponseRedirect(reverse('train_review', args=[train_id]))

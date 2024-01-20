@@ -21,11 +21,11 @@
         <ul>
             {% for review in reviews %}
                 <li>
-                    <strong>{{ review.user.first_name }} {{ review.user.last_name }}</strong>
+                    <strong>{{ review.user.user.first_name }} {{ review.user.user.last_name }}</strong>
                     <br>
                     {{ review.comment }}
                     <br>
-                    <i class="text-sm">{{ review.timestamp }}</i>
+                    <i class="text-sm">{{ review.created_at }}</i>
                 </li>
                 <hr />
             {% endfor %}

@@ -55,7 +55,7 @@ class Schedule(models.Model):
 
 
 class TrainReview(models.Model):
-    user = models.ForeignKey(PassengerProfile, on_delete=models.CASCADE)
+    user = models.ForeignKey(PassengerProfile, on_delete=models.CASCADE, related_name='train_review')
     train = models.ForeignKey(Train, on_delete=models.CASCADE)
     comment = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
