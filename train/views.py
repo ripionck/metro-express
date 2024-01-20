@@ -1,7 +1,10 @@
 from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 from django.views import View
 from django.views.generic import FormView
-from .models import Train, Station
+from django.contrib.auth.mixins import LoginRequiredMixin
+from .models import Train, Station, TrainReview
 from .forms import TrainSearchForm
 
 
@@ -39,16 +42,22 @@ class TrainSearchView(FormView):
             return render(self.request, 'trains/search_results.html', context)
         except Station.DoesNotExist:
             return render(self.request, 'trains/not_found.html')  
-        
-    # def form_invalid(self, form):
-    #     # Handle the case when the form is invalid
-    #     return self.render_to_response(self.get_context_data(form=form))
-
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     # You can add additional context variables if needed
-    #     return context
-        
+   
 class NotFoundView(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'not_found.html')
+    
+class TrainReviewView(LoginRequiredMixin, View):
+    template_name = 'train_review.html'
+
+    def get(self, request, train_id):
+        train = get_object_or_404(Train, id=train_id)
+        reviews = TrainReview.objects.filter(train=train)
+        return render(request, self.template_name, {'train': train, 'reviews': reviews})
+
+    def post(self, request, train_id):
+        train = get_object_or_404(Train, id=train_id)
+        comment = request.POST.get('comment')
+        user_review = TrainReview(train=train, user=request.user, comment=comment)
+        user_review.save()
+        return HttpResponseRedirect(reverse('train_review', args=[train_id]))

@@ -45,8 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'core',
     'booking',
-    'passenger',
-    'review',
+    'account',
     'train',
     'transaction',
 ]

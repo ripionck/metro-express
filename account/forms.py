@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.contrib.auth.models import User
-from .models import Passenger
+from .models import PassengerProfile
 from .constants import GENDER_TYPE
 
 class PassengerRegistrationForm(UserCreationForm):
@@ -45,7 +45,7 @@ class PassengerRegistrationForm(UserCreationForm):
             city = self.cleaned_data.get('city')
 
             # Create passenger instance
-            Passenger.objects.create(
+            PassengerProfile.objects.create(
                 user=user_instance,
                 gender=gender,
                 date_of_birth=date_of_birth,

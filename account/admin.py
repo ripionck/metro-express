@@ -10,4 +10,4 @@ class PassengerAdmin(admin.ModelAdmin):
     def last_name(self, obj):
         return obj.user.last_name
     
-admin.site.register(models.Passenger, PassengerAdmin)
+admin.site.register(models.PassengerProfile, PassengerAdmin)
