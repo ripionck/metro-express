@@ -34,7 +34,7 @@ class ScheduleCreateView(AdminRequiredMixin, CreateView):
     model = Schedule
     form_class = ScheduleForm
     template_name = 'schedule/schedule_create.html'
-    success_url = reverse_lazy('schedule_view')
+    success_url = reverse_lazy('schedule_list')
 
 class ScheduleUpdateView(AdminRequiredMixin, UpdateView):
     model = Schedule

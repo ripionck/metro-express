@@ -67,6 +67,15 @@ class ScheduleForm(ModelForm):
     class Meta:
         model = Schedule
         fields = ['train', 'station', 'arrival_time', 'departure_time', 'halt_duration_minutes']
+    
+    arrival_time = forms.DateTimeField(
+        widget=forms.DateTimeInput(attrs={'type': 'datetime-local'}),
+        input_formats=['%Y-%m-%dT%H:%M'], 
+    )
+    departure_time = forms.DateTimeField(
+        widget=forms.DateTimeInput(attrs={'type': 'datetime-local'}),
+        input_formats=['%Y-%m-%dT%H:%M'], 
+    )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
