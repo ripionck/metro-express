@@ -11,7 +11,7 @@ class PassengerProfile(models.Model):
     date_of_birth = models.DateField()
     gender = models.CharField(choices=GENDER_TYPE, max_length=20)
     address = models.TextField()
-    balance = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    balance = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
     def __str__(self):
         return f'{self.user.first_name} {self.user.last_name}'

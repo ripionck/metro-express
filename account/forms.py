@@ -91,7 +91,7 @@ class ProfileUpdateForm(forms.ModelForm):
         if self.instance:
             try:
                 # Use .first() to get a single instance
-                passenger = self.instance.passenger.first()
+                passenger = self.instance.passenger_profile
             except PassengerProfile.DoesNotExist:
                 passenger = None
 

@@ -16,7 +16,7 @@
            href="{% url 'deposit_money' %}">Deposit Balance</a>
         <a class="ml-8 border-0 bg-gray-100 text-sky-900 rounded px-4 py-2 text-orange-600 hover:bg-sky-200"
            href="{% url 'booking_list' %}">My Booking</a>
-        <div class="text-blue-900 my-auto font-black ml-8 mt-4">Balance : ${{ request.user.passenger.balance }}</div>
+        <div class="text-blue-900 my-auto font-black ml-8 mt-4">Balance : ${{ request.user.passenger_profile.balance }}</div>
         <div class="w-1/2 mx-auto mt-4">
             <form method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                 {% csrf_token %}
@@ -105,7 +105,6 @@
                         {% endif %}
                     </div>
                 </div>
-                
                 <button class="w-full text-white border-0 bg-sky-500 hover:bg-sky-700 rounded px-4 py-2 focus:outline-none focus:shadow-outline uppercase"
                         type="submit">Update</button>
                 <br />
