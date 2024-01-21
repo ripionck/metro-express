@@ -33,7 +33,6 @@ class TrainSearchView(View):
                 start_station__name__icontains=from_station,
                 end_station__name__icontains=to_station,
             )
-            print(search_results)
 
             return render(request, self.result_template_name, {'search_results': search_results, 'form': form})
 
