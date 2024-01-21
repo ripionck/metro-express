@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Station, Day, Train, Schedule, TrainReview
+from .models import Train, Schedule
 
 class TrainSearchForm(forms.Form):
     from_station = forms.CharField(label='From', max_length=100)
@@ -16,16 +16,6 @@ class TrainSearchForm(forms.Form):
             ('Luxury', 'Luxury'),
         ]
     )
-
-class StationForm(ModelForm):
-    class Meta:
-        model = Station
-        fields = ['name', 'slug']
-
-class DayForm(ModelForm):
-    class Meta:
-        model = Day
-        fields = ['name']
 
 class TrainForm(ModelForm):
     class Meta:
@@ -108,7 +98,3 @@ class ScheduleUpdateForm(ModelForm):
             )
         })
 
-class TrainReviewForm(ModelForm):
-    class Meta:
-        model = TrainReview
-        fields = ['user', 'train', 'comment']

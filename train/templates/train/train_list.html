@@ -32,23 +32,37 @@
                         </td>
                         {% if request.user.is_authenticated and request.user.is_staff %}
                             <!-- Display these options only if the user is an admin -->
-                            <td class="py-2 px-4 border-b text-center">
+                            <td class="py-2 border-b text-center">
                                 <a href="{% url 'train_update' pk=train.id %}"
-                                   class="border-0 bg-sky-700 rounded px-2 py-1.5 text-white hover:bg-sky-400">Update</a>
+                                   class="border-0 bg-sky-700 rounded px-4 py-1.5 text-white hover:bg-sky-400">Update</a>
                             </td>
-                            <td class="py-2 px-4 border-b text-center">
+                            <td class="py-2 border-b text-center">
                                 <a href="{% url 'train_delete' pk=train.id %}"
-                                   class="border-0 bg-red-700 rounded px-2 py-1.5 text-white hover:bg-red-400">Delete</a>
+                                   class="border-0 bg-red-700 rounded px-4 py-1.5 text-white hover:bg-red-400">Delete</a>
                             </td>
                         {% else %}
                             <td class="py-2 px-4 border-b text-center">
                                 <a href="{% url 'schedule_view' train_id=train.id %}"
-                                   class="border-0 bg-sky-700 rounded px-2 py-1.5 text-white hover:bg-sky-400">View Schedule</a>
+                                   class="border-0 bg-sky-700 rounded px-4 py-1.5 text-white hover:bg-sky-400">View Schedule</a>
                             </td>
                         {% endif %}
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
+        <hr />
+        <ul class="mt-8">
+            <h1 class="mb-4 text-xl font-bold">Passenger's Review</h1>
+            {% for review in reviews %}
+                <li>
+                    <strong>{{ review.user.user.first_name }} {{ review.user.user.last_name }}</strong>
+                    <br>
+                    {{ review.comment }}
+                    <br>
+                    <i class="text-sm">{{ review.created_at }}</i>
+                </li>
+                <hr />
+            {% endfor %}
+        </ul>
     </div>
 {% endblock content %}

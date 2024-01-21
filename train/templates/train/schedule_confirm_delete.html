@@ -3,13 +3,16 @@
     Metro Express | Schedule Delete Confirmation
 {% endblock head_title %}
 {% block content %}
-    <h2>Delete Schedule</h2>
-    <p>Are you sure you want to delete this schedule?</p>
-    <form method="post">
-        {% csrf_token %}
-        <button type="submit"
-                class="border-0 bg-red-700 rounded px-2 py-1.5 text-white hover:bg-red-400">Confirm Delete</button>
-    </form>
-    <a href="{% url 'schedule_list' %}"
-       class="border-0 bg-sky-700 rounded px-2 py-1.5 text-white hover:bg-sky-400">Cancel</a>
+    <div class="container h-screen w-1/2 mx-auto pt-8">
+        <p class="text-lg mb-4">Are you sure you want to delete this schedule?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit"
+                    class="border-0 bg-red-700 rounded px-2 py-1 text-white hover:bg-red-400">Confirm Delete</button>
+            <button>
+                <a href="{% url 'schedule_list' %}"
+                   class="border-0 bg-sky-700 rounded px-2 py-1.5 text-white hover:bg-sky-400">Cancel</a>
+            </button>
+        </form>
+    </div>
 {% endblock %}
