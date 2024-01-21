@@ -18,7 +18,7 @@ from .forms import PassengerRegistrationForm, ProfileUpdateForm, PasswordChangeF
 
 class PassengerRegistrationView(CreateView):
     model = User
-    template_name = 'passenger/passenger_register.html'
+    template_name = 'account/passenger_register.html'
     form_class = PassengerRegistrationForm
     success_url = reverse_lazy('confirm_register')
 
@@ -34,7 +34,7 @@ class PassengerRegistrationView(CreateView):
 
         # Send confirmation email
         email_subject = 'Confirm Your Email'
-        email_body = render_to_string('passengers/confirm_email.html', {'confirm_link': confirm_link})
+        email_body = render_to_string('account/confirm_email.html', {'confirm_link': confirm_link})
         email = EmailMultiAlternatives(email_subject, '', to=[user.email])
         email.attach_alternative(email_body, 'text/html')
         email.send()
@@ -43,7 +43,7 @@ class PassengerRegistrationView(CreateView):
         
 
 class RegistrationConfirmationView(View):
-    template_name = 'passenger/confirm_message.html'
+    template_name = 'account/confirm_message.html'
 
     def get(self, request, *args, **kwargs):
         return render(request, self.template_name)
@@ -66,7 +66,7 @@ def activate( request, uid64, token):
 
     
 class PassengerloginView(LoginView):
-    template_name = 'passenger/passenger_login.html'
+    template_name = 'account/passenger_login.html'
 
     def get_success_url(self):
         return reverse_lazy('home')
@@ -78,7 +78,7 @@ def PassengerLogoutView(request):
 
     
 class ProfileUpdateView(View):
-    template_name = 'passenger/passenger_profile.html'
+    template_name = 'account/passenger_profile.html'
 
     def get(self, request):
         # Retrieve the UserUpdateForm instance with the user's data
@@ -97,7 +97,7 @@ class ProfileUpdateView(View):
     
 class PasswordChangeView(PasswordChangeView):
     form_class = PasswordChangeForm
-    template_name = 'passenger/password_change.html'
+    template_name = 'account/password_change.html'
     success_url = reverse_lazy('passenger_profile')
     
     def form_valid(self, form):
