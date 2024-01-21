@@ -4,27 +4,39 @@
 {% endblock head_title %}
 {% block content %}
     <div class="container mx-auto pt-8 h-screen">
-        <h1 class="text-2xl font-bold mb-4">Booking Information</h1>
-        <table class="min-w-full bg-white border border-gray-300">
-            <thead>
-                <tr>
-                    <th class="py-2 px-4 border-b">Booking Records</th>
-                    <th class="py-2 px-4 border-b"></th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for booking in user_bookings %}
+        <h1 class="text-2xl mb-4">Booking Information</h1>
+        {% if user_bookings %}
+            <table class="min-w-full bg-white border border-gray-300">
+                <thead>
                     <tr>
-                        <td class="py-2 px-4 border-b text-center">{{ booking }}</td>
-                        <td class="py-2 px-4 border-b text-center">
-                            {% if booking.train %}
-                                <a href="{% url 'train_review' booking.train.id %}"
-                                   class="hover:underline">Write a review for {{ booking.train.name }}</a>
-                            {% endif %}
-                        </td>
+                        <th class="py-2 px-4 border-b">Passenger</th>
+                        <th class="py-2 px-4 border-b">Train</th>
+                        <th class="py-2 px-4 border-b">Class</th>
+                        <th class="py-2 px-4 border-b">Selected Seats</th>
+                        <th class="py-2 px-4 border-b">Seats Quantity</th>
+                        <th class="py-2 px-4 border-b">Price</th>
+                        <th class="py-2 px-4 border-b"></th>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {% for booking in user_bookings %}
+                        <tr>
+                            <td class="py-2 px-4 border-b text-center">{{ booking.user.first_name }} {{ booking.user.last_name }}</td>
+                            <td class="py-2 px-4 border-b text-center">{{ booking.train.name }}</td>
+                            <td class="py-2 px-4 border-b text-center">{{ booking.class_type }}</td>
+                            <td class="py-2 px-4 border-b text-center">{{ booking.selected_seat }}</td>
+                            <td class="py-2 px-4 border-b text-center">{{ booking.seats_quantity }}</td>
+                            <td class="py-2 px-4 border-b text-center">${{ booking.total_price }}</td>
+                            <td class="py-2 px-4 border-b text-center">
+                                <a href="{% url 'train_review' booking.train.id %}"
+                                   class="underline text-green-700">Write a review</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No bookings found.</p>
+        {% endif %}
     </div>
-{% endblock content %}
+{% endblock %}

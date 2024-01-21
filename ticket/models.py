@@ -40,7 +40,7 @@ class Ticket(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f'{self.user.username} - {self.train.name} - {self.class_type}'
+        return f'Passenger: {self.user.first_name} {self.user.first_name} - Train: {self.train.name} - Class: {self.class_type} - Selected seats: {self.selected_seat} - Seats Quantity: {self.seats_quantity} - Price: ${self.total_price}'
 
     class Meta:
         ordering = ['-booking_date']

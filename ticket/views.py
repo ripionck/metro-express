@@ -13,6 +13,7 @@ class BookingListView(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         user_bookings = Ticket.objects.filter(user=request.user)
+        print(user_bookings)
         return render(request, self.template_name, {'user_bookings': user_bookings})
 
 
