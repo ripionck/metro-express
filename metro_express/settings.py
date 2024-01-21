@@ -84,19 +84,19 @@ WSGI_APPLICATION = 'metro_express.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
 # DATABASES = {
-#     'default': dj_database_url.config(
-#         default='postgres://metro_express_user:d3NILa8pcYmV5gb4N2ihflHCW4egGEQJ@dpg-cmksrp6n7f5s73auiu7g-a.oregon-postgres.render.com/metro_express',
-#         conn_max_age=600
-#     )
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
 # }
+
+DATABASES = {
+    'default': dj_database_url.config(
+        default='postgres://metro_express_user:d3NILa8pcYmV5gb4N2ihflHCW4egGEQJ@dpg-cmksrp6n7f5s73auiu7g-a.oregon-postgres.render.com/metro_express',
+        conn_max_age=600
+    )
+}
 
 # DATABASES = {
 #     'default': {
