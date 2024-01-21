@@ -93,7 +93,7 @@ WSGI_APPLICATION = 'metro_express.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        default='postgres://metro_express_user:d3NILa8pcYmV5gb4N2ihflHCW4egGEQJ@dpg-cmksrp6n7f5s73auiu7g-a.oregon-postgres.render.com/metro_express?options=-c%20pool_mode%3Dsession',
+        default='postgres://metro_express_user:d3NILa8pcYmV5gb4N2ihflHCW4egGEQJ@dpg-cmksrp6n7f5s73auiu7g-a.oregon-postgres.render.com/metro_express',
         conn_max_age=600,
     )
 }
