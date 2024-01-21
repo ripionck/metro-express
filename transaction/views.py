@@ -4,7 +4,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView
 from django.urls import reverse_lazy
 from .forms import DepositForm
-from decimal import Decimal
 from .email_utils import send_transaction_email
 
 # Create your views here.

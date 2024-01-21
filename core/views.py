@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from django.urls import reverse
+from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.views import View
 from django.views.generic import TemplateView
+from .models import ContactUs
 
 # Create your views here.
 class HomeView(TemplateView):
@@ -19,8 +21,17 @@ class ContactUsView(View):
         email = request.POST.get('email')
         message = request.POST.get('message')
 
-        # Here, you can add your logic to handle the form data
-        # For example, you can send an email, save to the database, etc.
+        # Save the form data to the database
+        ContactUs.objects.create(name=name, email=email, message=message)
+        messages.success(
+            self.request,
+            f'Your message sent successfully!'
+        )
 
+        # Optionally, can add logic to send an email or perform other actions here
+
+        # Redirect to the contact_us page after the form is submitted
         return HttpResponseRedirect(reverse('contact_us'))
 
+
+    
