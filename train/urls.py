@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import TrainCreateView, TrainUpdateView, TrainDeleteView, ScheduleCreateView, ScheduleListView, ScheduleUpdateView, ScheduleDeleteView, TrainListView, TrainSearchView, NotFoundView, TrainReviewView, ScheduleView
+from .views import TrainCreateView, TrainUpdateView, TrainDeleteView, ScheduleCreateView, ScheduleListView, ScheduleUpdateView, ScheduleDeleteView, TrainListView, TrainSearchView,  TrainReviewView, ScheduleView
 
 urlpatterns = [
     path('create/', TrainCreateView.as_view(), name='train_create'),
@@ -11,7 +11,6 @@ urlpatterns = [
     path('schedule/<int:pk>/update/', ScheduleUpdateView.as_view(), name='schedule_update'),
     path('schedule/<int:pk>/delete/', ScheduleDeleteView.as_view(), name='schedule_delete'),
     path('schedule/<int:train_id>/', ScheduleView.as_view(), name='schedule_view'),
-    path('search/', TrainSearchView.as_view(), name='search_results'),
-    path('not-found/', NotFoundView.as_view(), name='not_found'),
+    path('search/', TrainSearchView.as_view(), name='train_search'),
     path('train/<int:train_id>/', TrainReviewView.as_view(), name='train_review'),
 ]

@@ -3,19 +3,10 @@ from django.forms import ModelForm
 from .models import Train, Schedule
 
 class TrainSearchForm(forms.Form):
-    from_station = forms.CharField(label='From', max_length=100)
-    to_station = forms.CharField(label='To', max_length=100)
-    date = forms.DateField(label='Date')
-    travel_class = forms.ChoiceField(
-        label='Class',
-        choices=[
-            ('Economy', 'Economy'),
-            ('FirstClass', 'First Class'),
-            ('Business', 'Business'),
-            ('Premium', 'Premium'),
-            ('Luxury', 'Luxury'),
-        ]
-    )
+    from_station = forms.CharField(max_length=100)
+    to_station = forms.CharField(max_length=100)
+    date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    class_type = forms.ChoiceField(choices=[('economy', 'Economy'), ('business', 'Business')], required=False)
 
 class TrainForm(ModelForm):
     class Meta:

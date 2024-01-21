@@ -3,70 +3,42 @@ from django.http import HttpResponseRedirect
 from django.db.models import Q
 from django.urls import reverse, reverse_lazy
 from django.views import View
-from django.views.generic import CreateView, UpdateView, DeleteView, ListView
+from django.views.generic import CreateView, UpdateView, DeleteView, ListView, FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import UserPassesTestMixin
 from .models import Train, Station, Schedule, TrainReview
-from .forms import TrainForm, TrainUpdateForm,  ScheduleForm, ScheduleUpdateForm
+from .forms import TrainForm, TrainUpdateForm,  ScheduleForm, ScheduleUpdateForm, TrainSearchForm
 
 
 # Create your views here.
-class TrainSearchView(ListView):
+class TrainSearchView(View):
+    form_class = TrainSearchForm
     template_name = 'index.html'
+    result_template_name = 'train/search_results.html'
 
-    def get_queryset(self):  
-        from_station_name = self.request.GET.get("from_station")
-        to_station_name = self.request.GET.get("to_station")
-
-        try:
-            search_results = Train.objects.filter(
-                Q(start_station__name__icontains=from_station_name) | Q(end_station__name__icontains=to_station_name)
-            )
-
-            context = {'search_results': search_results}
-            print(context)
-            return render(self.request, 'train/search_results.html', context)
-        except Station.DoesNotExist:
-            return render(self.request, 'train/not_found.html')  
-        
-
-# class TrainSearchView(ListView):
-#     template_name = 'index.html'
-
-#     def get(self, request, *args, **kwargs):
-#         # Get the URL parameters
-#         from_station_name = request.GET.get('from_station')
-#         to_station_name = request.GET.get('to_station')
-
-#         # Populate the form with the URL parameters
-#         form = self.form_class(initial={
-#             'from_station': from_station_name,
-#             'to_station': to_station_name,
-#         })
-
-#         if form.is_valid():
-#             try:
-#                 # Get the related stations using their names
-#                 from_station = Station.objects.get(name__iexact=from_station_name)
-#                 to_station = Station.objects.get(name__iexact=to_station_name)
-
-#                 # Filter the queryset based on the form data
-#                 search_results = Train.objects.filter(
-#                     start_station__exact=from_station,
-#                     end_station__exact=to_station,
-#                 )
-
-#                 context = {'search_results': search_results}
-#                 return render(request, 'train/search_results.html', context)
-#             except Station.DoesNotExist:
-#                 return render(request, 'train/not_found.html')
-#         else:
-#             # Handle the case where the form is not valid
-#             return render(request, self.template_name)
-   
-class NotFoundView(View):
     def get(self, request, *args, **kwargs):
-        return render(request, 'train/not_found.html')
+        form = TrainSearchForm()
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        form = TrainSearchForm(request.POST)
+        if form.is_valid():
+            from_station = form.cleaned_data['from_station']
+            to_station = form.cleaned_data['to_station']
+            # date = form.cleaned_data['date']
+            # class_type = form.cleaned_data['class_type']
+
+            # Filtering logic based on the form data
+            search_results = Train.objects.filter(
+                start_station__name__icontains=from_station,
+                end_station__name__icontains=to_station,
+            )
+            print(search_results)
+
+            return render(request, self.result_template_name, {'search_results': search_results, 'form': form})
+
+        return render(request, self.template_name, {'form': form})
+
     
 class AdminRequiredMixin(UserPassesTestMixin):
     def test_func(self):

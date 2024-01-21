@@ -12,9 +12,6 @@
                     <th class="py-2 px-4 border-b">Start Station</th>
                     <th class="py-2 px-4 border-b">End Station</th>
                     <th class="py-2 px-4 border-b">Total Seats</th>
-                    <th class="py-2 px-4 border-b">Arrival Time</th>
-                    <th class="py-2 px-4 border-b">Departure Time</th>
-                    <th class="py-2 px-4 border-b">Halt Duration</th>
                     <th class="py-2 px-4 border-b"></th>
                 </tr>
             </thead>
@@ -26,9 +23,6 @@
                             <td class="py-2 px-4 border-b text-center">{{ result.start_station }}</td>
                             <td class="py-2 px-4 border-b text-center">{{ result.end_station }}</td>
                             <td class="py-2 px-4 border-b text-center">{{ result.available_seats }}</td>
-                            <td class="py-2 px-4 border-b text-center">{{ result.arrival_time }}</td>
-                            <td class="py-2 px-4 border-b text-center">{{ result.departure_time }}</td>
-                            <td class="py-2 px-4 border-b text-center">{{ result.halt_duration }}</td>
                             {% if request.user.is_authenticated %}
                                 <td class="py-2 px-4 border-b text-center">
                                     <a href="{% url 'book_train' result.id %}"
@@ -44,7 +38,11 @@
                     {% endfor %}
                 </tbody>
             {% else %}
-                <p>No search results found.</p>
+                <tbody>
+                    <tr>
+                        <td colspan="8" class="py-2 px-4 border-b text-center">No search results found.</td>
+                    </tr>
+                </tbody>
             {% endif %}
         </table>
     </div>
