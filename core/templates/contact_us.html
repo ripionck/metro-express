@@ -1,37 +1,50 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block head_title %}
     Metro Express | Contact Us
 {% endblock head_title %}
 {% block content %}
-    <div class="h-screen w-1/2 mx-auto">
-        <h2 class="text-xl uppercase py-4">Contact Us</h2>
-        <p class="pb-4 text-lg">Feel free to reach out to us using the form below:</p>
-        <form method="post">
-            {% csrf_token %}
-            <label for="name" class="uppercase text-sm font-bold">Name:</label>
-            <br />
-            <input class="w-2/3 mb-4 py-2 rounded"
-                   type="text"
-                   id="name"
-                   name="name"
-                   required>
-            <br />
-            <label for="email" class="uppercase text-sm font-bold">Email:</label>
-            <br />
-            <input class="w-2/3 mb-4 py-2 rounded"
-                   type="email"
-                   id="email"
-                   name="email"
-                   required>
-            <br />
-            <label for="message" class="uppercase text-sm font-bold">Message:</label>
-            <br />
-            <textarea class="w-2/3 mb-4 py-8 rounded"  id="message" name="message" required></textarea>
-            <br />
-            <button type="submit"
-                    class="uppercase text-sm font-bold border-0 rounded px-4 py-2 bg-sky-500 hover:bg-sky-900">
-                Submit
-            </button>
-        </form>
+    <div class="h-screen px-48">
+        <div class="grid grid-cols-2 gap-4">
+            <div class="mt-6">
+                <p class="pb-4 text-xl pl-4">Feel free to reach out to us using the form below:</p>
+                <form method="post" class="border rounded px-4 py-4">
+                    {% csrf_token %}
+                    <label for="name" class="uppercase text-sm font-bold">Name:</label>
+                    <br />
+                    <input class="w-full mb-4 py-2 rounded px-4"
+                           type="text"
+                           id="name"
+                           name="name"
+                           placeholder="Your Name"
+                           required>
+                    <br />
+                    <label for="email" class="uppercase text-sm font-bold">Email:</label>
+                    <br />
+                    <input class="w-full mb-4 py-2 rounded px-4"
+                           type="email"
+                           id="email"
+                           name="email"
+                           placeholder="Your Email"
+                           required>
+                    <br />
+                    <label for="message" class="uppercase text-sm font-bold">Message:</label>
+                    <br />
+                    <textarea class="w-full mb-4 py-8 rounded px-4"
+                              id="message"
+                              name="message"
+                              placeholder="Your Message"
+                              required></textarea>
+                    <br />
+                    <button type="submit"
+                            class="uppercase text-sm font-bold border-0 rounded px-4 py-2 bg-sky-500 hover:bg-sky-900">
+                        Submit
+                    </button>
+                </form>
+            </div>
+            <div class="mt-12">
+                <img src="{% static 'images/contact_us.png' %}" alt="Contact Us">
+            </div>
+        </div>
     </div>
 {% endblock %}
