@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% block head_title %}
-    Metro Express | Trains Information
+    Metro Express | Train's Information
 {% endblock head_title %}
 {% block content %}
     <div class="container mx-auto pt-8 h-screen">
-        <h1 class="text-2xl font-bold mb-4">Train Information</h1>
+        <h1 class="text-3xl mb-4">Train's Information</h1>
         <table class="min-w-full bg-white border border-gray-300">
             <thead>
                 <tr>
@@ -43,16 +43,16 @@
                         {% else %}
                             <td class="py-2 px-4 border-b text-center">
                                 <a href="{% url 'schedule_view' train_id=train.id %}"
-                                   class="border-0 bg-sky-700 rounded px-4 py-1.5 text-white hover:bg-sky-400">View Schedule</a>
+                                   class="underline text-green-700">View Schedule</a>
                             </td>
                         {% endif %}
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
-        <hr />
         <ul class="mt-8">
-            <h1 class="mb-4 text-xl font-bold">Passenger's Review</h1>
+            <h1 class="mb-4 text-xl text-sky-900">Passenger's Review</h1>
+            <hr />
             {% for review in reviews %}
                 <li>
                     <strong>{{ review.user.user.first_name }} {{ review.user.user.last_name }}</strong>
@@ -61,8 +61,8 @@
                     <br>
                     <i class="text-sm">{{ review.created_at }}</i>
                 </li>
-                <hr />
             {% endfor %}
+            <hr />
         </ul>
     </div>
 {% endblock content %}
