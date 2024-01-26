@@ -15,11 +15,13 @@
                 <div class="flex gap-4">
                     <div class="mb-4">
                         <label for="from_station" class="block text-gray-700 font-bold mb-2">From:</label>
-                        <input type="text"
-                               id="from_station"
-                               name="from_station"
-                               class="border rounded w-full py-2 px-3 text-black"
-                               placeholder="Enter From Station">
+                        {% for station in stations %}
+                            <select id="travel_class"
+                                    name="travel_class"
+                                    class="border rounded w-full py-2 pl-3 pr-16 text-black">
+                                <option value="economy">{{ station.name }}</option>
+                            </select>
+                        {% endfor %}
                     </div>
                     <div class="mb-4">
                         <label for="to_station" class="block text-gray-700 font-bold mb-2">To:</label>
@@ -56,6 +58,33 @@
                     Search
                 </button>
             </form>
+        </div>
+    </div>
+    <div class="bg-green-100 p-10 rounded-md flex flex-col md:flex-row items-center">
+        <!-- Image -->
+        <div class="md:w-1/2 mt-4 md:mt-0 md:pl-12">
+            <img src="{% static 'images/instruction.png' %}"
+                 alt="Railway Image"
+                 class="w-2/3 h-auto">
+        </div>
+        <!-- Text Content -->
+        <div class="md:w-1/2 md:pr-8">
+            <h3 class="text-2xl font-semibold mb-2">Instructions to Purchase Tickets</h3>
+            <ul class="list-disc">
+                <li>Tickets can be bought online ten days in advance.</li>
+                <li>
+                    You can pay for the tickets using mobile financial services: bKash, Nagad, Rocket, Upay, or debit/credit cards: Mastercard, Visa, DBBL Nexus. Other payment options will be available soon.
+                </li>
+                <li>
+                    In case of payment or transaction failure, the deducted amount would be refunded by your bank or MFS provider within 8 business days.
+                </li>
+                <li>
+                    If you have not received your ticket copy in email, kindly check your Spam/Junk folder. You can also download your ticket copy from the purchase history of your account after you log in.
+                </li>
+                <li>
+                    In case of passengers downloading fake apps or any other app from Google Play claiming to sell train tickets of Bangladesh Railway, the authorities will not take any liability.
+                </li>
+            </ul>
         </div>
     </div>
 {% endblock %}
