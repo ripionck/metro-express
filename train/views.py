@@ -2,40 +2,35 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.views import View
-from django.views.generic import CreateView, UpdateView, DeleteView, ListView, FormView
+from django.views.generic import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import UserPassesTestMixin
 from .models import Train, Station, Schedule, TrainReview
-from .forms import TrainForm, TrainUpdateForm,  ScheduleForm, ScheduleUpdateForm, TrainSearchForm
+from .forms import TrainForm, TrainUpdateForm,  ScheduleForm, ScheduleUpdateForm
 
 
 # Create your views here.
-class TrainSearchView(View):
-    form_class = TrainSearchForm
-    template_name = 'index.html'
-    result_template_name = 'train/search_results.html'
+class TrainInformationSearchView(View):
+    template_name = 'train/train_information_search.html'
 
     def get(self, request, *args, **kwargs):
-        form = TrainSearchForm()
-        return render(request, self.template_name, {'form': form})
+        trains = Train.objects.all()
+        return render(request, self.template_name, {'trains': trains})
 
     def post(self, request, *args, **kwargs):
-        form = TrainSearchForm(request.POST)
-        if form.is_valid():
-            from_station = form.cleaned_data['from_station']
-            to_station = form.cleaned_data['to_station']
-            # date = form.cleaned_data['date']
-            # class_type = form.cleaned_data['class_type']
+        train_name = request.POST.get('train_name')
 
-            # Filtering logic based on the form data
-            search_results = Train.objects.filter(
-                start_station__name__icontains=from_station,
-                end_station__name__icontains=to_station,
-            )
+        try:
+            train = Train.objects.get(name=train_name)
+            reviews = TrainReview.objects.filter(train=train)
+            schedules = Schedule.objects.filter(train=train).select_related('station')
+            search_result = {'train': train, 'reviews': reviews, 'schedules':schedules}
+        except Train.DoesNotExist:
+            search_result = None
 
-            return render(request, self.result_template_name, {'search_results': search_results, 'form': form})
+        trains = Train.objects.all()
 
-        return render(request, self.template_name, {'form': form})
+        return render(request, self.template_name, {'search_result': search_result, 'trains':trains, 'selected_train': train_name})
 
     
 class AdminRequiredMixin(UserPassesTestMixin):
