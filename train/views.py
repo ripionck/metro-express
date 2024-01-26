@@ -74,8 +74,7 @@ class TrainListView(View):
 
     def get(self, request):
         trains = Train.objects.all()
-        reviews = TrainReview.objects.all()
-        return render(request, self.template_name, {'trains': trains, 'reviews': reviews})
+        return render(request, self.template_name, {'trains': trains})
     
 class ScheduleListView(View):
     template_name = 'schedule/schedule_list.html'
@@ -83,13 +82,6 @@ class ScheduleListView(View):
     def get(self, request):
         schedules= Schedule.objects.all()
         return render(request, self.template_name, {'schedules': schedules})
-    
-class ScheduleView(View):
-    template_name = 'schedule/schedule_view.html'
-
-    def get(self, request, train_id):
-        schedule = Schedule.objects.filter(train_id=train_id)
-        return render(request, self.template_name, {'schedule': schedule})
     
 class TrainReviewView(LoginRequiredMixin, View):
     template_name = 'train/train_review.html'

@@ -5,15 +5,15 @@
 {% endblock head_title %}
 {% block content %}
     <div class="container mx-auto pt-8 h-screen">
-        <h1 class="text-3xl ml-8">Train Information</h1>
+        <h1 class="text-2xl ml-8 pt-8">Select Your Preferred Train</h1>
         <div class="flex">
             <!-- Search Bar (Left Side) -->
             <form method="post"
                   action="{% url 'train_information_search' %}"
                   class="w-1/3 p-4">
                 {% csrf_token %}
-                <div class="p-4">
-                    <label for="trainSearch" class="text-lg font-semibold">TRAIN NAME</label>
+                <div class="px-4">
+                    <label for="trainSearch" class="font-semibold">TRAIN NAME</label>
                     <!-- Dropdown for Station Names -->
                     <select name="train_name"
                             class="w-full p-2 border border-gray-300 rounded-md mt-2">
@@ -28,45 +28,48 @@
                 </div>
             </form>
             <!-- Search Results (Right Side) -->
-            <div class="w-2/3 p-4">
+            <div class="w-2/3 px-4">
                 {% if search_result %}
                     <!-- Display search result when available -->
-                    <div id="searchResult">
-                        <h2 class="text-xl font-semibold mb-4">Search Results</h2>
-                        <!-- Individual Train Result -->
-                        <div class="border border-gray-300 p-4 mb-4 rounded-md">
-                            <h3 class="text-lg font-semibold">{{ search_result.train.name }}</h3>
-                            <!-- Runs On -->
-                            <div class="flex mt-2">
-                                <p>Runs On:</p>
+                    <div class="border border-gray-300 p-4 mb-4 rounded-md">
+                        <div class="flex justify-between mt-2">
+                            <h3 class="text-xl font-semibold">{{ search_result.train.name }}</h3>
+                            <span class="flex">
+                                <p class="text-gray-500">Runs On:</p>
                                 <ul class="flex text-green-600">
-                                    {% for day in search_result.train.day_of_week.all %}<li class="mx-4">{{ day }}</li>{% endfor %}
+                                    {% for day in search_result.train.day_of_week.all %}<li class="mx-2">{{ day }}</li>{% endfor %}
                                 </ul>
+                            </span>
+                        </div>
+                        <hr class="border border-gray-300" />
+                        <!-- Routes -->
+                        <div class="mt-2">
+                            <p class="underline font-bold text-green-700">Routes</p>
+                            <div class="flex items-center">
+                                <div class="mx-4 text-gray-500">
+                                    From: <span class="text-lg text-black">{{ search_result.train.start_station }}</span>
+                                </div>
+                                <div class="flex-grow border-t border-gray-300"></div>
+                                <div class="mx-4 text-gray-500">
+                                    To: <span class="text-lg text-black">{{ search_result.train.end_station }}</span>
+                                </div>
                             </div>
-                            <!-- Routes -->
-                            <div class="mt-2">
-                                <p>Routes:</p>
-                                <p>
-                                    {{ search_result.train.start_station }} <span>
-                                    {% for schedule in search_result.schedules %}
-                                        <p>
-                                            {{ schedule.station.name }}
-                                            (Arrival: {{ schedule.arrival_time }} Departure: {{ schedule.departure_time }} Halt: {{ schedule.halt_duration_minutes }} min)
-                                        </p>
-                                    {% endfor %}
-                                </span>(Arrival: Halt: 0 min, Departure: 06:05 am BST)
-                            </p>
-                            <p>{{ search_result.train.end_station }} (Arrival: 06:50 am BST, Halt: 0 min, Departure: Duration: 00:45 h)</p>
+                            {% for schedule in search_result.schedules %}
+                                <p class="flex justify-center py-4">
+                                    <span class="text-gray-500 pr-2">Arrival:</span> {{ schedule.arrival_time|time:"g:i A" }}
+                                    <span class="px-12"><span class="text-gray-500">Departure:</span> {{ schedule.departure_time|time:"g:i A" }}</span>  <span class="text-gray-500 pr-2">Halt:</span> {{ schedule.halt_duration_minutes }}<span class="text-gray-500 pl-2">min</span>
+                                </p>
+                            {% endfor %}
                             <p>Total Duration: 00:45h</p>
                         </div>
                     </div>
                     <!-- Train Review -->
                     <ul class="mt-8">
                         <h1 class="mb-4 text-xl text-sky-900">Passenger's Review</h1>
-                        <hr />
+                        <hr class="border border-gray-300" />
                         {% if search_result.reviews.exists %}
                             {% for review in search_result.reviews %}
-                                <li>
+                                <li class="py-2">
                                     <strong>{{ review.user.user.first_name }} {{ review.user.user.last_name }}</strong>
                                     <br>
                                     {{ review.comment }}
@@ -77,18 +80,17 @@
                         {% else %}
                             <li>No reviews found for this train.</li>
                         {% endif %}
-                        <hr />
+                        <hr class="border border-gray-300" />
                     </ul>
-                </div>
-            {% else %}
-                <!-- Display image when no search result -->
-                <div class="flex justify-center">
-                    <img src="{% static 'images/search.png' %}"
-                         alt="Search Image"
-                         class="w-1/2 h-2/3">
-                </div>
-            {% endif %}
+                {% else %}
+                    <!-- Display image when no search result -->
+                    <div class="flex justify-center">
+                        <img src="{% static 'images/search.png' %}"
+                             alt="Search Image"
+                             class="w-1/2 h-2/3">
+                    </div>
+                {% endif %}
+            </div>
         </div>
     </div>
-</div>
 {% endblock content %}
