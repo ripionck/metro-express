@@ -28,10 +28,10 @@
                 </div>
             </form>
             <!-- Search Results (Right Side) -->
-            <div class="w-2/3 px-4">
+            <div class="w-2/3 px-8">
                 {% if search_result %}
                     <!-- Display search result when available -->
-                    <div class="border border-gray-300 p-4 mb-4 rounded-md">
+                    <div class="border border-gray-300 p-4 mb-4 rounded-md bg-gray-100">
                         <div class="flex justify-between mt-2">
                             <h3 class="text-xl font-semibold">{{ search_result.train.name }}</h3>
                             <span class="flex">
@@ -69,7 +69,7 @@
                         <hr class="border border-gray-300" />
                         {% if search_result.reviews.exists %}
                             {% for review in search_result.reviews %}
-                                <li class="py-2">
+                                <li class="py-2 bg-gray-100 px-4">
                                     <strong>{{ review.user.user.first_name }} {{ review.user.user.last_name }}</strong>
                                     <br>
                                     {{ review.comment }}
@@ -78,7 +78,7 @@
                                 </li>
                             {% endfor %}
                         {% else %}
-                            <li>No reviews found for this train.</li>
+                            <li class="bg-gray-100 px-4">No reviews found for this train.</li>
                         {% endif %}
                         <hr class="border border-gray-300" />
                     </ul>

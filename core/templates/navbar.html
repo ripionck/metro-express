@@ -1,8 +1,21 @@
 <nav class="bg-gray-800 p-4">
-    <div class="container mx-auto">
-        <div class="flex items-center justify-around">
+    <div class="container mx-auto px-10">
+        <div class="flex items-center justify-between">
             <a class="text-white text-xl font-semibold" href="{% url 'home' %}">Metro Express</a>
+            <div class="block sm:hidden">
+                <!-- Mobile menu button -->
+                <button id="mobile-menu-btn" class="text-white focus:outline-none">
+                    <svg class="h-6 w-6"
+                         fill="none"
+                         stroke="currentColor"
+                         viewBox="0 0 24 24"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                    </svg>
+                </button>
+            </div>
             <div class="hidden sm:block">
+                <!-- Desktop menu -->
                 <ul class="flex items-center space-x-6">
                     <li class="nav-item">
                         <a class="text-white hover:underline" href="{% url 'home' %}">Home</a>
@@ -50,5 +63,62 @@
                 </ul>
             </div>
         </div>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden sm:hidden">
+            <ul class="flex flex-col items-center space-y-4 mt-4">
+                <li class="nav-item">
+                    <a class="text-white hover:underline" href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="text-white hover:underline"
+                       href="{% url 'train_information_search' %}">Train Information</a>
+                </li>
+                <li class="nav-item">
+                    <a class="text-white hover:underline" href="{% url 'contact_us' %}">Contact Us</a>
+                </li>
+                {% if request.user.is_authenticated %}
+                    {% if request.user.is_staff %}
+                        <!-- Display these options only if the user is an admin -->
+                        <li class="nav-item">
+                            <a class="text-white hover:underline" href="{% url 'train_create' %}">Add Train</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="text-white hover:underline" href="{% url 'train_list' %}">Train List</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="text-white hover:underline" href="{% url 'schedule_create' %}">Add Schedule</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="text-white hover:underline" href="{% url 'schedule_list' %}">Train Schedule</a>
+                        </li>
+                    {% endif %}
+                    <li class="nav-item">
+                        <a class="text-white hover:underline"
+                           href="{% url 'passenger_profile' %}">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="text-white hover:underline"
+                           href="{% url 'passenger_logout' %}">Logout</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="text-white hover:underline"
+                           href="{% url 'passenger_register' %}">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="text-white hover:underline" href="{% url 'passenger_login' %}">Login</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
     </div>
 </nav>
+<!-- Add JavaScript to toggle mobile menu -->
+<script>
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    mobileMenuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+</script>
