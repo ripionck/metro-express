@@ -4,15 +4,15 @@
     Metro Express | Contact Us
 {% endblock head_title %}
 {% block content %}
-    <div class="h-screen px-48">
-        <div class="grid grid-cols-2 gap-4">
+    <div class="h-screen px-4 md:px-12 lg:px-24 xl:px-48">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div class="mt-6">
-                <p class="pb-4 text-xl pl-4">Feel free to reach out to us using the form below:</p>
+                <p class="pb-4 text-lg md:text-xl pl-4">Feel free to reach out to us using the form below:</p>
                 <form method="post" class="border rounded px-4 py-4">
                     {% csrf_token %}
                     <label for="name" class="uppercase text-sm font-bold">Name:</label>
                     <br />
-                    <input class="w-full mb-4 py-2 rounded px-4"
+                    <input class="w-full mb-2 md:mb-4 py-2 rounded px-4"
                            type="text"
                            id="name"
                            name="name"
@@ -21,7 +21,7 @@
                     <br />
                     <label for="email" class="uppercase text-sm font-bold">Email:</label>
                     <br />
-                    <input class="w-full mb-4 py-2 rounded px-4"
+                    <input class="w-full mb-2 md:mb-4 py-2 rounded px-4"
                            type="email"
                            id="email"
                            name="email"
@@ -30,7 +30,7 @@
                     <br />
                     <label for="message" class="uppercase text-sm font-bold">Message:</label>
                     <br />
-                    <textarea class="w-full mb-4 py-8 rounded px-4"
+                    <textarea class="w-full mb-2 md:mb-4 py-4 md:py-8 rounded px-4"
                               id="message"
                               name="message"
                               placeholder="Your Message"
@@ -42,8 +42,10 @@
                     </button>
                 </form>
             </div>
-            <div class="mt-12">
-                <img src="{% static 'images/contact_us.png' %}" alt="Contact Us">
+            <div class="mt-12 hidden md:block">
+                <img src="{% static 'images/contact_us.png' %}"
+                     alt="Contact Us"
+                     class="w-full h-auto">
             </div>
         </div>
     </div>
