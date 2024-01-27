@@ -11,7 +11,7 @@
                   action="{% url 'train_search' %}"
                   class="max-w-md mx-auto bg-white p-8 border border-gray-300 mt-10 rounded shadow-lg">
                 {% csrf_token %}
-                <h2 class="text-2xl text-black mb-4">Search Trains</h2>
+                <h2 class="text-2xl text-black mb-4">Search Train</h2>
                 <div class="flex flex-col md:flex-row md:gap-4">
                     <div class="mb-4">
                         <label for="from_station" class="block text-gray-700 font-bold mb-2">From:</label>
@@ -58,58 +58,19 @@
                     Search
                 </button>
             </form>
-            {% comment %} <form method="post" action="{% url 'train_search' %}" class="max-w-md mx-auto bg-white p-8 border border-gray-300 mt-10 rounded shadow-lg">
-                {% csrf_token %}
-                <h2 class="text-2xl text-black mb-4">Search Trains</h2>
-                <div class="flex flex-col md:flex-row md:gap-4">
-                    <div class="mb-4">
-                        <label for="from_station" class="block text-gray-700 font-bold mb-2">From:</label>
-                        <select id="from_station" name="from_station" class="border rounded w-full md:w-56 py-2 pl-3 pr-4 text-black">
-                            <option value="">From Station</option>
-                            {% for station in stations %}<option value="{{ station.name }}">{{ station.name }}</option>{% endfor %}
-                        </select>
-                    </div>
-                    <div class="mb-4">
-                        <label for="to_station" class="block text-gray-700 font-bold mb-2">To:</label>
-                        <select id="to_station" name="to_station" class="border rounded w-full md:w-56 py-2 pl-3 pr-4 text-black">
-                            <option value="">To Station</option>
-                            {% for station in stations %}<option value="{{ station.name }}">{{ station.name }}</option>{% endfor %}
-                        </select>
-                    </div>
-                </div>
-                <div class="flex flex-col md:flex-row md:gap-4">
-                    <div class="mb-4">
-                        <label for="date" class="block text-gray-700 font-bold mb-2">Date:</label>
-                        <input type="date" id="date" name="date" class="border rounded w-full py-2 pl-3 pr-4 text-black">
-                    </div>
-                    <div class="mb-4">
-                        <label for="travel_class" class="block text-gray-700 font-bold mb-2">Class:</label>
-                        <select id="travel_class" name="travel_class" class="border rounded w-full py-2 pl-3 pr-4 text-black">
-                            <option>Select Class</option>
-                            <option value="economy">Economy</option>
-                            <option value="business">Business</option>
-                            <option value="premium">Premium</option>
-                            <option value="luxury">Luxury</option>
-                        </select>
-                    </div>
-                </div>
-                <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">
-                    Search
-                </button>
-            </form> {% endcomment %}
         </div>
     </div>
-    <div class="bg-green-100 p-10 rounded-md flex flex-col md:flex-row items-center">
+    <div class="bg-green-100 p-10 rounded-md flex flex-col md:flex-row items-center gap-8">
         <!-- Image -->
-        <div class="md:w-1/2 mt-4 md:mt-0 md:pl-12">
+        <div class="md:w-2/3 mx-auto md:mx-0 mt-4 md:mt-0 md:pl-12 md:pr-8">
             <img src="{% static 'images/instruction.png' %}"
                  alt="Railway Image"
-                 class="w-2/3 h-auto">
+                 class="w-full h-auto">
         </div>
         <!-- Text Content -->
-        <div class="md:w-1/2 md:pr-8">
-            <h3 class="text-2xl font-semibold mb-2">Instructions to Purchase Tickets</h3>
-            <ul class="list-disc">
+        <div class="md:w-2/3 md:pr-8 mt-4 md:mt-0 leading-relaxed">
+            <h3 class="text-2xl font-semibold mb-2 text-green-500">Instructions to Purchase Tickets</h3>
+            <ul class="list-disc mb-4">
                 <li>Tickets can be bought online ten days in advance.</li>
                 <li>
                     You can pay for the tickets using mobile financial services: bKash, Nagad, Rocket, Upay, or debit/credit cards: Mastercard, Visa, DBBL Nexus. Other payment options will be available soon.
@@ -126,4 +87,5 @@
             </ul>
         </div>
     </div>
+</div>
 {% endblock %}
