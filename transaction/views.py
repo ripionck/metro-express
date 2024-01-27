@@ -15,7 +15,6 @@ class DepositView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         amount = form.cleaned_data.get('amount')
         passenger = self.request.user.passenger_profile
-        print(passenger.balance)
         passenger.balance += amount
         passenger.save(
             update_fields=[
