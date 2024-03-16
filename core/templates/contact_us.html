@@ -43,10 +43,12 @@
                 </form>
             </div>
             <div class="mt-12 hidden md:block">
-                <img src="{% static 'images/contact_us.png' %}"
-                     alt="Contact Us"
-                     class="w-full h-auto">
+                {% comment %}
+                <img src="{% static 'images/contact_us.png' %}" {% endcomment %}
+                    <img src="https://i.ibb.co/3ydDhGp/contact-us.png"
+                         alt="Contact Us"
+                         class="w-full h-auto">
+                </div>
             </div>
         </div>
-    </div>
-{% endblock %}
+    {% endblock %}

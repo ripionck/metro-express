@@ -85,12 +85,14 @@
                 {% else %}
                     <!-- Display image when no search result -->
                     <div class="flex justify-center">
-                        <img src="{% static 'images/search.png' %}"
-                             alt="Search Image"
-                             class="w-1/2 h-2/3">
-                    </div>
-                {% endif %}
+                        {% comment %}
+                        <img src="{% static 'images/search.png' %}" {% endcomment %}
+                            <img src="https://i.ibb.co/XLtfBDM/search.png"
+                                 alt="Search Image"
+                                 class="w-1/2 h-2/3">
+                        </div>
+                    {% endif %}
+                </div>
             </div>
         </div>
-    </div>
-{% endblock content %}
+    {% endblock content %}
