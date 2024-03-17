@@ -11,5 +11,5 @@
 Django, Tailwind CSS, HTML, PostgreSQL
 
 ### Admin Testing 
-username: admin
+username: admin  
 password: adminpassword
