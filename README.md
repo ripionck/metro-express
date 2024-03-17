@@ -8,4 +8,8 @@
 [https://e-lit-emporium.netlify.app/](https://metro-express.onrender.com/)
 
 ## 🛠 Technologies & Tools
-Django, Tailwind CSS, HTML
+Django, Tailwind CSS, HTML, PostgreSQL
+
+### Admin Testing 
+username: admin
+password: adminpassword
