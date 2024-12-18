@@ -5,7 +5,7 @@
 ● Enabled features for filtering trains, secure money deposits, seat booking, and train reviews with user restrictions.
 
 ## Demo
-[https://e-lit-emporium.netlify.app/](https://metro-express.onrender.com/)
+[Metro Express](https://metro-express.onrender.com/)
 
 ## 🛠 Technologies & Tools
 Django, Tailwind CSS, HTML, PostgreSQL
